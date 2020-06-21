@@ -12,58 +12,7 @@
 
 ## 目录
 
-- [软件体系结构文档模板](#软件体系结构文档模板)
-  - [文档修改历史](#文档修改历史)
-  - [目录](#目录)
-  - [引言](#引言)
-    - [编制目的](#编制目的)
-    - [词汇表](#词汇表)
-    - [参考资料](#参考资料)
-  - [产品概述](#产品概述)
-  - [逻辑视图](#逻辑视图)
-  - [组合视图](#组合视图)
-    - [开发包图](#开发包图)
-    - [运行时进程](#运行时进程)
-    - [物理部署](#物理部署)
-  - [架构设计](#架构设计)
-    - [模块职责](#模块职责)
-      - [模块视图](#模块视图)
-      - [各层职责](#各层职责)
-      - [层之间调用接口](#层之间调用接口)
-    - [用户界面层分解](#用户界面层分解)
-      - [展示层模块的职责](#展示层模块的职责)
-      - [展示层模块的接口规范](#展示层模块的接口规范)
-        - [adminView 模块的接口规范](#adminview-模块的接口规范)
-        - [hotelmanagerView 模块的接口规范](#hotelmanagerview-模块的接口规范)
-        - [userView 模块的接口规范](#userview-模块的接口规范)
-        - [hotelView 模块的接口规范](#hotelview-模块的接口规范)
-        - [couponView 模块的接口规范](#couponview-模块的接口规范)
-        - [orderView 模块的接口规范](#orderview-模块的接口规范)
-    - [业务逻辑层分解](#业务逻辑层分解)
-      - [业务逻辑层模块的职责](#业务逻辑层模块的职责)
-      - [业务逻辑层的模块接口规范](#业务逻辑层的模块接口规范)
-        - [Adminbl模块的接口规范](#adminbl模块的接口规范)
-        - [Couponbl模块的接口规范](#couponbl模块的接口规范)
-        - [Hotelbl模块的接口规范](#hotelbl模块的接口规范)
-        - [Orderbl模块的接口规范](#orderbl模块的接口规范)
-        - [Userbl模块的接口规范](#userbl模块的接口规范)
-    - [数据层分解](#数据层分解)
-      - [数据层模块的职责](#数据层模块的职责)
-      - [数据层模块的接口规范](#数据层模块的接口规范)
-  - [信息视角](#信息视角)
-    - [数据持久化对象](#数据持久化对象)
-    - [数据库表](#数据库表)
-      - [Answers表](#answers表)
-      - [Collections表](#collections表)
-      - [coupon表](#coupon表)
-      - [Credits表](#credits表)
-      - [hotel表](#hotel表)
-      - [orderList表](#orderlist表)
-      - [Question表](#question表)
-      - [room表](#room表)
-      - [user表](#user表)
-      - [VIP表](#vip表)
-      - [VIPLevel表](#viplevel表)
+[TOC]
 
 ## 引言
 
@@ -187,11 +136,11 @@
 
 #### 层之间调用接口
 
-|                                                            接口                                                            | 服务调用方         | 服务提供方         |
-| :------------------------------------------------------------------------------------------------------------------------: | ------------------ | ------------------ |
-|                       adminAPI<br/>couponAPI<br/>hotelAPI<br>hotelManagerAPI<br/>orderAPI<br/>useAPI                       | 客户端页面         | 服务器端展示层     |
-| AccountService<br>AdminService<br/>HotelService<br/>RoomService<br/>OrderService<br/>CouponMatchStrategy<br/>CouponService | 服务器端展示层     | 服务器端业务逻辑层 |
-|                AccountMapper<br/>AdminMapper<br/>HotelMapper<br/>RoomMapper<br/>derMapper<br/>CouponMapper                 | 服务器端业务逻辑层 | 服务器端数据层     |
+|                                                                                                                     接口                                                                                                                      | 服务调用方         | 服务提供方         |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | ------------------ | ------------------ |
+|                                                                                adminAPI<br/>couponAPI<br/>hotelAPI<br>hotelManagerAPI<br/>orderAPI<br/>useAPI                                                                                 | 客户端页面         | 服务器端展示层     |
+| AccountService<br>AdminService<br/>HotelService<br/>RoomService<br/>OrderService<br/>CouponMatchStrategy<br/>CouponService<br/>HotelSearchService<br/>AnswerService<br/>QuestionService<br/>CollectionService<br/>LevelService<br/>VIPService | 服务器端展示层     | 服务器端业务逻辑层 |
+|                     AccountMapper<br/>AdminMapper<br/>HotelMapper<br/>RoomMapper<br/>OrderMapper<br/>CouponMapper<br/>AnswerMapper<br/>QuestionMapper<br/>CollectionMapper<br/>CreditMapper<br/>LevelMapper<br/>VIPMapper                     | 服务器端业务逻辑层 | 服务器端数据层     |
 
 借用添加酒店用例来说明层之间的调用，如图所示。每一层之间都是由上层依赖了一个接口（需接口），而下层实现这个接口（供接口）。HotelBLService 提供了 HotelUI 界面所需要的所有业务逻辑功能。HotelMapper 提供了对数据库的增、删、改、查等操作。这样的实现就大大降低了层与层之间的耦合。
 
@@ -291,13 +240,15 @@
 
 #### 业务逻辑层模块的职责
 
-|   模块   | 职责                                     |
-| :------: | :--------------------------------------- |
-| adminbl  | 负责实现管理员界面所需要的服务           |
-| couponbl | 负责实现优惠券部分的业务逻辑             |
-| hotelbl  | 负责酒店页面所需要的服务                 |
-| orderbl  | 负责订单部分的业务逻辑                   |
-|  userbl  | 负责酒店管理员，酒店用户界面所需要的服务 |
+|    模块    | 职责                                     |
+| :--------: | :--------------------------------------- |
+|  adminbl   | 负责实现管理员界面所需要的服务           |
+|  couponbl  | 负责实现优惠券部分的业务逻辑             |
+|  hotelbl   | 负责酒店页面所需要的服务                 |
+|  orderbl   | 负责订单部分的业务逻辑                   |
+|   userbl   | 负责酒店管理员，酒店用户界面所需要的服务 |
+| questionbl | 负责用户的提问和回答逻辑                 |
+|   VIPbl    | 负责VIP用户、企业用户的特权服务          |
 
 #### 业务逻辑层的模块接口规范
 
@@ -308,18 +259,38 @@
 * AdminService.addManager
   * 语法 : `ResponseVO addManager(UserForm userForm)`
   * 前置条件 : Admin已登录
-  * 后置条件 : 在数据库中插入AdminPO对象
+  * 后置条件 : 在User数据库中插入Manager
+* AdminService.addSalesPerson
+  * 语法 : `ResponseVO addSalesPerson(UserForm userForm);`
+  * 前置条件 : Admin已登录
+  * 后置条件 : 在User数据库中找到所有的网站营销人员
 * AdminService.getAllManagers
   * 语法 `List<User> getAllManagers()`
   * 前置条件 : Admin已登录
-  * 后置条件 : 从数据库中查找并返回所有的AdminPO对象
+  * 后置条件 : 从User数据库中查找并返回所有的HotelManager
+* AdminService.getAllSalesPerson()
+  * 语法`List<User> getAllSalesPerson()`
+  * 前置条件 : Admin已登录
+  * 后置条件 : 从数据库中查找并返回所有的SalesPerson
+* AdminService.deleteManager
+  * 语法 : `ResponseVO deleteManager(Integer id);`
+  * 前置条件 : Admin已登录
+  * 后置条件 : 删除酒店工作人员
+* AdminService.deleteSalesPerson
+  * 语法 : `ResponseVO deleteSalesPerson(Integer id)`
+  * 前置条件 : Admin已登录
+  * 后置条件 : 删除网站营销人员
 
 需要的服务（需接口）
 
-|             服务名             | 服务                            |
-| :----------------------------: | :------------------------------ |
-|   `AdminMapper.addManager()`   | 在数据库中插入AdminPO对象       |
-| `AdminMapper.getAllManagers()` | 在数据库中查找所有的AdminPO对象 |
+|              服务名               | 服务                            |
+| :-------------------------------: | :------------------------------ |
+|    `AdminMapper.addManager()`     | 在数据库中插入AdminPO对象       |
+|  `AdminMapper.getAllManagers()`   | 在数据库中查找所有的AdminPO对象 |
+|  `AdminMapper.getAllManagers()`   | 获取所有的酒店管理人员信息      |
+| `AdminMapper.getAllSalesPerson()` | 获取所有的网站营销人员信息      |
+|   `AdminMapper.deleteManager()`   | 删除酒店工作人员                |
+| `AdminMapper.deleteSalesPerson()` | 删除网站营销人员                |
 
 ##### Couponbl模块的接口规范
 
@@ -336,28 +307,67 @@
 * CouponService.addHotelTargetMoneyCoupon
   * 语法 : `public CouponVO addHotelTargetMoneyCoupon(HotelTargetMoneyCouponVO couponVO)`
   * 前置条件 : 得到Coupon数据库的引用
-  * 后置条件 : 向数据库中插入CouponPO对象
+  * 后置条件 : 向数据库中插入HotelTargetMoneyCoupon
+* CouponService.addBirthdayCouponVO
+  * 语法 : `CouponVO addBirthdayCouponVO(BirthdayCouponVO couponVO);`
+  * 前置条件 : 得到Coupon数据库的引用
+  * 后置条件 : 向数据库中插入BirthdayCoupon
+* CouponService.addManyRoomCoupon
+  * 语法 : `CouponVO addManyRoomCoupon(ManyRoomCouponVO couponVO);`
+  * 前置条件 : 得到Coupon数据库的引用
+  * 后置条件 : 向数据库中插入ManyRoomCoupon
+* CouponService.addTimeCouponVO
+  * 语法 : `CouponVO addTimeCouponVO(TimeCouponVO couponVO);`
+  * 前置条件 : 得到Coupon数据库的引用
+  * 后置条件 : 向数据库中插入TimeCoupon
+* CouponService.addCorporateCouponVO
+  * 语法 : `CouponVO addCorporateCouponVO(CorporateCouponVO couponVO);`
+  * 前置条件 : 得到Coupon数据库的引用
+  * 后置条件 : 向数据库中插入CorporateCoupon
+* CouponService.addBizRegionCouponVO
+  * 语法 : `CouponVO addBizRegionCouponVO(BizRegionCouponVO couponVO);`
+  * 前置条件 : 得到Coupon数据库的引用
+  * 后置条件 : 向数据库中插入BizRegionCoupon
+* CouponService.getWebsiteCoupon
+  * 语法 : `List<Coupon> getWebsiteCoupon();`
+  * 前置条件 : 得到Coupon数据库的引用
+  * 后置条件 : 从数据库中查找WebsiteCoupon
+* CouponService.annulCoupon
+  * 语法 : `void annulCoupon(Integer couponId);`
+  * 前置条件 : 得到Coupon数据库的引用
+  * 后置条件 : 将对应的Coupon设为无效
 
 需要的服务（需接口）
 
-|             服务名             | 服务                                  |
-| :----------------------------: | :------------------------------------ |
-| `CouponMatchStrategy.isMatch`  | 判断优惠券策略和需要的策略是否匹配    |
-| `CouponMapper.selectByHotelId` | 根据hotelId来查找数据库中对应的coupon |
-|  `CouponMapper.insertCoupon`   | 向数据库中插入Coupon对象              |
+|               服务名                | 服务                                  |
+| :---------------------------------: | :------------------------------------ |
+|    `CouponMatchStrategy.isMatch`    | 判断优惠券策略和需要的策略是否匹配    |
+|   `CouponMapper.selectByHotelId`    | 根据hotelId来查找数据库中对应的coupon |
+|     `CouponMapper.insertCoupon`     | 向数据库中插入Coupon对象              |
+| `HotelService.retrieveHotelDetails` | 获取酒店详细信息                      |
+|     `CouponMapper.getWebCoupon`     | 获取网站Coupon                        |
+|     `CouponMapper.getBizRegion`     | 获取对应商圈的优惠券                  |
 
 ##### Hotelbl模块的接口规范
 
 提供的服务（供接口）
 
 * HotelService.addHotel
-  * 语法 : `public void addHotel(HotelVO hotelVO) throws ServiceException`
+  * 语法 : `void addHotel(HotelForm hotelForm) throws ServiceException;`
   * 前置条件 : 登录用户已被认证为管理员，获得Hotel数据库服务的引用
   * 后置条件 : 向Hotel数据库中插入HotelPO
 * HotelService.updateRoomInfo
-  * 语法 : `public void updateRoomInfo(Integer hotelId, String roomType, Integer rooms)`
+  * 语法 : `void updateHotelInfo(Integer hotelId, HotelForm hotelForm) throws  ServiceException;`
   * 前置条件 : 获得Room数据库服务的引用
   * 后置条件 : 向Room数据库中根据hotelId和roomType更新被预定的时间
+* HotelService.updateHotelInfo
+  * 语法 : `void updateHotelInfo(Integer hotelId, HotelForm hotelForm) throws  ServiceException`
+  * 前置条件 : 登录用户被认证为酒店管理员
+  * 后置条件 : 根据HotelForm内容更新酒店
+* HotelService.deleteHotel
+  * 语法 : `void deleteHotel(Integer hotelId)`
+  * 前置条件 : 登录用户被认证为系统管理员
+  * 后置条件 : 删除该酒店
 * HotelService.retrieveHotels
   * 语法 : `public List<HotelVO> retrieveHotels()`
   * 前置条件 : 获得Hotel数据库服务的引用
@@ -370,18 +380,34 @@
   * 语法 : `public int getRoomCurNum(Integer hotelId, String roomType)`
   * 前置条件 : 获得Room数据库服务的引用
   * 后置条件 : 根据hotelId和roomType当前房间数量
-* HotelService.getHotelOrders
-  * 语法 : `public List<Order> getHotelOrders(Integer hotelId)`
-  * 前置条件 : 获得Hotel，Order数据库服务的引用
-  * 后置条件 : 根据HotelId获得所有对应的OrderPO
+* HotelService.retrieveAvailableHotelDetails
+  * 语法 : `HotelVO retrieveAvailableHotelDetails(Integer hotelId, String beginTime, String endTime);`
+  * 前置条件 : 获得hotel和Order数据库的服务引用
+  * 后置条件 : 根据时间获得对应时间里的酒店房间数量
+* HotelService.addComment
+  * 语法 : `void addComment(CommentVO commentVO, Integer hotelId);`
+  * 前置条件 : 获得Comment数据库的服务和引用，用户已下单
+  * 后置条件 : 更新酒店的各类评分和comment次数
+* HotelService.annulComment
+  * 语法 : `void annulComment(CommentVO commentVO, Integer hotelId);`
+  * 前置条件 : 获得Comment数据库的服务和引用，用户已评价
+  * 后置条件 : 更新酒店的commentTime和各类评分
 * RoomService.retrieveHotelRoomInfo
   * 语法 : `public List<HotelRoom> retrieveHotelRoomInfo(Integer hotelId)`
+  * 前置条件 : 获得Room数据库服务的引用
+  * 后置条件 : 根据HotelId获得RoomPO
+* RoomService.retrieveHotelRoomInfoByType
+  * 语法 : `List<HotelRoom> retrieveHotelRoomInfoByType(Integer hotelId, RoomType type);`
   * 前置条件 : 获得Room数据库服务的引用
   * 后置条件 : 根据HotelId获得RoomPO
 * RoomService.insertRoomInfo
   * 语法 : `public void insertRoomInfo(HotelRoom hotelRoom)`
   * 前置条件 : 获得Room数据库服务的引用
   * 后置条件 : 向Room数据库中插入RoomPO
+* RoomService.deleteRoom
+  * 语法 : `void deleteRoom(Integer hotelId, String roomType);`
+  * 前置条件 : 获得Room数据库服务的引用
+  * 后置条件 : 在Room数据库中删除RoomPO
 * RoomService.updateRoomInfo
   * 语法 : `public void updateRoomInfo(Integer hotelId, String roomType, Integer rooms)`
   * 前置条件 : 获得Room数据库服务的引用
@@ -390,21 +416,35 @@
   * 语法 : `public int getRoomCurNum(Integer hotelId, String roomType)`
   * 前置条件 : 获得Room数据库服务的引用
   * 后置条件 : 根据hotelId和roomType获得Room的数量
+* RoomService.getRoomCurNumByTime
+  * 语法 : `Integer getRoomCurNumByTime(Integer hotelId, String beginTime, String endTime, String type);`
+  * 前置条件 : 获得Room和Order数据库服务的引用
+  * 后置条件 : 获得对应时间段内可用的房间数量
+* HotelSearchService.searchHotel
+  * 语法 : `List<HotelVO> searchHotel(SearchBodyVO searchBody);`
+  * 前置条件 : 用户已登录
+  * 后置条件 : 根据searchBody获得匹配的酒店列表
 
 需要的服务（需接口）
 
-|                服务名                | 服务                                                   |
-| :----------------------------------: | :----------------------------------------------------- |
-|     `AccountService.getUserInfo`     | 根据ManagerId返回UserPO的数据                          |
-|      `HotelMapper.insertHotel`       | 向Hotel数据库中插入HotelPO对象                         |
-|     `RoomService.updateRoomInfo`     | 向Room数据库中更新对应roomId，roomType房间的被预定时间 |
-|     `RoomService.getRoomCurNum`      | 根据hotelId和roomType获得当前房间被预订的时间          |
-|     `HotelMapper.selectAllHotel`     | 获得所有hotelPO的对象                                  |
-|       `HotelMapper.selectById`       | 根据HotelId获得HotelPO对象                             |
-| `RroomService.retrieveHotelRoomInfo` | 根据HotelId获得对应的所有Room信息                      |
-|     `OrderService.getAllOrders`      | 获得所有OrderPO                                        |
-|  `RoomMapper.selectRoomsByHotelId`   | 根据HotelId获得RoomPO                                  |
-|       `RoomMapper.insertRoom`        | 向Room数据库中插入RoomPO                               |
+|                服务名                |              服务              |
+| :----------------------------------: | :----------------------------: |
+|     `AccountService.getUserInfo`     | 根据ManagerId返回UserPO的数据  |
+|      `HotelMapper.insertHotel`       | 向Hotel数据库中插入HotelPO对象 |
+|     `HotelMapper.selectAllHotel`     |     获得所有hotelPO的对象      |
+|    `HotelMapper.updateHotelName`     |          更新酒店名称          |
+|   `HotelMapper.updateHotelAddress`   |          更新酒店地址          |
+| `HotelMapper.updateHotelDescription` |          更新酒店描述          |
+|      `HotelMapper.deleteHotel`       |            删除酒店            |
+|   `HotelMapper.updateHotelPoints`    |          更新酒店评分          |
+|       `HotelMapper.selectById`       |   根据HotelId获得HotelPO对象   |
+|    `OrderService.getHotelOrders`     |     获得对应酒店的OrderPO      |
+|     `OrderService.filterOrders`      |        筛选对应的Order         |
+|  `RoomMapper.selectRoomsByHotelId`   |     根据HotelId获得RoomPO      |
+|       `RoomMapper.insertRoom`        |    向Room数据库中插入RoomPO    |
+|       `RoomMapper.deleteRoom`        |          删除对应房间          |
+|     `RoomMapper.updateRoomInfo`      |          更新客房信息          |
+|      `RoomMapper.getRoomCurNum`      |    获取客房当前可用房间数量    |
 
 ##### Orderbl模块的接口规范
 
@@ -422,6 +462,62 @@
   * 语法 : `public List<Order> getUserOrders(int userid)`
   * 前置条件 : 获得Order数据库的服务的引用
   * 后置条件 : 根据UserId查找对应的Order信息
+* OrderService.getHotelOrders
+  * 语法 : `List<Order> getHotelOrders(Integer hotelId);`
+  * 前置条件 : 获得Order数据库的服务的引用
+  * 后置条件 : 根据HotelId查找对应的Order信息
+* OrderService.checkIn
+  * 语法 : `ResponseVO checkIn(int orderId);`
+  * 前置条件 : 获得Order数据库的服务的引用
+  * 后置条件 : 订单状态修改为已入住
+* OrderService.probableAbnormalOrder
+  * 语法 : `List<Order> probableAbnormalOrder(Integer hotelId);`
+  * 前置条件 : 获得Order数据库的服务的引用，认证为管理员
+  * 后置条件 : 获得酒店可能的异常订单
+* OrderService.abnormalOrder
+  * 语法 : `ResponseVO abnormalOrder(int orderId, double minCreditRatio);`
+  * 前置条件 : 获得Order数据库的服务的引用，认证为管理员
+  * 后置条件 : 标记为异常订单，扣除一定比例信誉
+* OrderService.finishOrder
+  * 语法 : `ResponseVO finishOrder(int orderId);`
+  * 前置条件 : 获得Order数据库的服务的引用，认证为管理员
+  * 后置条件 : 完成订单，添加信用
+* OrderService.getComment
+  * 语法 : `CommentVO getComment(int orderId);`
+  * 前置条件 : 获得Order数据库的服务的引用
+  * 后置条件 : 获取订单的评价
+* OrderService.annulComment
+  * 语法 : `ResponseVO annulComment(int orderId);`
+  * 前置条件 : 获得Order数据库的服务的引用
+  * 后置条件 : 删除该评价
+* OrderService.getHotelComment
+  * 语法 : `List<CommentVO> getHotelComment(int hotelId);`
+  * 前置条件 : 获得Order数据库的服务的引用,认证为管理员
+  * 后置条件 : 获得对应酒店的所有评价
+* OrderService.addComment
+  * 语法 : `ResponseVO addComment(CommentVO commentVO);`
+  * 前置条件 : 获得Order数据库的服务的引用，订单已入住或完成
+  * 后置条件 : 为订单添加评价
+* OrderService.getUserComment
+  * 语法 : `ResponseVO getUserComments(Integer userId);`
+  * 前置条件 : 获得Order数据库的服务的引用
+  * 后置条件 : 获取用户的所有评价
+* OrderService.getOrdersInMonth
+  * 语法 : `List<List<Order>> getOrdersInMonth(List<Order> orders)`
+  * 前置条件 : 获得Order数据库的服务的引用
+  * 后置条件 : 从订单输入流中返回近30天的订单
+* OrderService.getOrdersInMonthOfHotel
+  * 语法 : `List<List<Order>> getOrdersInMonthOfHotel(Integer hotelId);`
+  * 前置条件 :获得Order数据库的服务的引用
+  * 后置条件 : 获取对应酒店近30天的订单
+* OrderService.getOrdersInMonthOfAll
+  * 语法 : `List<List<Order>> getOrdersInMonthOfAll();`
+  * 前置条件 : 获得Order数据库的服务的引用
+  * 后置条件 : 获取所有近30天的Order
+* OrderService.filterOrders
+  * 语法 : `List<Order> filterOrders(List<Order> orders,String beginTime, String endTime);`
+  * 前置条件 : 获得Order数据库的服务的引用
+  * 后置条件 : 找到与入住及退房时间有关联的订单
 * OrderService.annulOrder
   * 语法 : `public ResponseVO annulOrder(int orderid)`
   * 前置条件 : 获得Hotel，User，Order数据库的服务的引用
@@ -429,13 +525,28 @@
 
 需要的服务（需接口）
 
-|            服务名             | 服务                                       |
-| :---------------------------: | :----------------------------------------- |
-| `HotelService.getRoomCurNum`  | 获取酒店房间已被预订的时间                 |
-| `AccountService.getUserInfo`  | 根据订单用户id获得用户信息                 |
-| `HotelService.updateRoomInfo` | 更新房间信息                               |
-|  `OrderMapper.getAllOrders`   | 从Order数据库中获取所有的OrderPO           |
-|  `OrderMapper.getUserOrders`  | 从Order数据库中获得所有UserId匹配的OrderPO |
+|              服务名               |                    服务                    |
+| :-------------------------------: | :----------------------------------------: |
+|   `HotelService.getRoomCurNum`    |         获取酒店房间已被预订的时间         |
+|   `AccountService.getUserInfo`    |         根据订单用户id获得用户信息         |
+|   `HotelService.updateRoomInfo`   |                更新房间信息                |
+|    `OrderMapper.getAllOrders`     |      从Order数据库中获取所有的OrderPO      |
+|    `OrderMapper.getUserOrders`    | 从Order数据库中获得所有UserId匹配的OrderPO |
+|      `OrderMapper.addOrder`       |                  添加订单                  |
+|    `OrderMapper.getOrderById`     |             获取对应Order信息              |
+|     `OrderMapper.annulOrder`      |                  撤销订单                  |
+|       `OrderMapper.checkIn`       |                  办理入住                  |
+|    `OrderMapper.abnormalOrder`    |               标记为异常订单               |
+|     `OrderMapper.finishOrder`     |                  完成订单                  |
+|     `OrderMapper.getComment`      |                获取订单评价                |
+|    `OrderMapper.annulComment`     |                  撤销评价                  |
+|   `OrderMapper.getHotelComment`   |                获取酒店评价                |
+|    `OrderMapper.updateComment`    |                  修改评价                  |
+| `RoomService.getRoomCurNumByTime` |       根据时间获取对应房间的可用数量       |
+|   `AccountService.getUserInfo`    |                获取用户信息                |
+|   `HotelService.updateRoomInfo`   |                更新房间信息                |
+|    `HotelService.annulComment`    |              修改Hotel的评分               |
+|     `HotelService.addComment`     |              修改Hotel的评分               |
 
 ##### Userbl模块的接口规范
 
@@ -454,9 +565,69 @@
   * 前置条件 : 得到User数据库服务的引用
   * 后置条件 : 根据id查找User数据库，返回匹配的对象
 * AccountService.updateUserInfo
-  * 语法 : `public ResponseVO updateUserInfo(int id, String password, String username, String phoneNumber)`
+  * 语法 : `ResponseVO updateUserInfo(int id, String username, String phoneNumber, String corporation);`
   * 前置条件 : 得到User数据库服务的引用
-  * 后置条件 : 根据id查找User数据库，更新用户名、密码和手机号
+  * 后置条件 : 根据id查找User数据库，更新用户名、手机号、公司名
+* AccountService.getUserInfoByEmail
+  * 语法 : `UserVO getUserInfoByEmail(String email)`
+  * 前置条件:
+  * 后置条件:
+* AccountService.updatePassword
+  * 语法 : `ResponseVO updatePassword(int id, String password);`
+  * 前置条件:
+  * 后置条件:
+* AccountService.updateCredit
+  * 语法 : `ResponseVO updateCredit(int id, double credit);`
+  * 前置条件:
+  * 后置条件:
+* AccountService.argueCredit
+  * 语法 : `ResponseVO argueCredit(int creditId, String argue);`
+  * 前置条件:
+  * 后置条件:
+* AccountService.getArgueCredits
+  * 语法 : `List<CreditVO> getArgueCredits();`
+  * 前置条件:
+  * 后置条件:
+* AccountService.handleArgue
+  * 语法 : `ResponseVO handleArgue(Integer creditId, boolean accept);`
+  * 前置条件:
+  * 后置条件:
+* AccountService.corporateVIP
+  * 语法 : `ResponseVO corporateVIP(int id, String corporate);`
+  * 前置条件:
+  * 后置条件:
+* AccountService.updateBirthday
+  * 语法 : `void updateBirthday(int id, String birthday)`
+  * 前置条件:
+  * 后置条件:
+* AccountService.registerAsVIP
+  * 语法 : `void registerAsVIP(int id);`
+  * 前置条件:
+  * 后置条件:
+* AccountService.freezeVIP
+  * 语法 : `void freezeVIP(int id);`
+  * 前置条件:
+  * 后置条件:
+* AccountService.updatePortrait
+  * 语法 : `ResponseVO updatePortrait(int userId, String url);`
+  * 前置条件:
+  * 后置条件:
+* AccountService.chargeCredit
+  * 语法 : `ResponseVO chargeCredit(int userId, int change, String reason);`
+  * 前置条件:
+  * 后置条件:
+* AccountService.getUserCreditChanges
+  * 语法 : `ResponseVO getUserCreditChanges(int userId);`
+  * 前置条件:
+  * 后置条件:
+* AccountService.getAllUsers
+  * 语法 : `List<UserVO> getAllUsers();`
+  * 前置条件:
+  * 后置条件:
+* AccountService.getAllPhoneNumOfSalesPerson
+  * 语法 : `List<String> getAllPhoneNumOfSalesPerson();`
+  * 前置条件:
+  * 后置条件:
 
 需要的服务（需接口）
 
