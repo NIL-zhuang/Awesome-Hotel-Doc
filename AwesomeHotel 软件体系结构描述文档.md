@@ -252,7 +252,7 @@
 
 #### 业务逻辑层的模块接口规范
 
-##### Adminbl模块的接口规范
+##### AdminBl模块的接口规范
 
 提供的服务（供接口）
 
@@ -292,7 +292,7 @@
 |   `AdminMapper.deleteManager()`   | 删除酒店工作人员                |
 | `AdminMapper.deleteSalesPerson()` | 删除网站营销人员                |
 
-##### Couponbl模块的接口规范
+##### CouponBl模块的接口规范
 
 提供的服务（供接口）
 
@@ -348,7 +348,7 @@
 |     `CouponMapper.getWebCoupon`     | 获取网站Coupon                        |
 |     `CouponMapper.getBizRegion`     | 获取对应商圈的优惠券                  |
 
-##### Hotelbl模块的接口规范
+##### HotelBl模块的接口规范
 
 提供的服务（供接口）
 
@@ -446,7 +446,7 @@
 |     `RoomMapper.updateRoomInfo`      |          更新客房信息          |
 |      `RoomMapper.getRoomCurNum`      |    获取客房当前可用房间数量    |
 
-##### Orderbl模块的接口规范
+##### OrderBl模块的接口规范
 
 提供的服务（供接口）
 
@@ -548,7 +548,7 @@
 |    `HotelService.annulComment`    |              修改Hotel的评分               |
 |     `HotelService.addComment`     |              修改Hotel的评分               |
 
-##### Userbl模块的接口规范
+##### UserBl模块的接口规范
 
 提供的服务（供接口）
 
@@ -570,74 +570,255 @@
   * 后置条件 : 根据id查找User数据库，更新用户名、手机号、公司名
 * AccountService.getUserInfoByEmail
   * 语法 : `UserVO getUserInfoByEmail(String email)`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件:得到User数据库服务的引用
+  * 后置条件:根据email查找User数据库
 * AccountService.updatePassword
   * 语法 : `ResponseVO updatePassword(int id, String password);`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件:得到User数据库服务的引用
+  * 后置条件:更新加密后的密码
 * AccountService.updateCredit
   * 语法 : `ResponseVO updateCredit(int id, double credit);`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件: 得到Credit数据库服务的引用
+  * 后置条件: 更新用户信誉
 * AccountService.argueCredit
   * 语法 : `ResponseVO argueCredit(int creditId, String argue);`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件: 得到Credit数据库服务的引用，Credit没有申诉过
+  * 后置条件: 向网站管理员提出信誉变更申诉
 * AccountService.getArgueCredits
   * 语法 : `List<CreditVO> getArgueCredits();`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件: 得到Credit数据库服务的引用
+  * 后置条件: 获取所有申诉的Credit
 * AccountService.handleArgue
   * 语法 : `ResponseVO handleArgue(Integer creditId, boolean accept);`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件: 得到Credit数据库服务的引用
+  * 后置条件: 将Argue标记为已接受或拒绝接受
 * AccountService.corporateVIP
   * 语法 : `ResponseVO corporateVIP(int id, String corporate);`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件: 得到VIP数据库服务的引用
+  * 后置条件: 将企业标记为CorporateVIP
 * AccountService.updateBirthday
   * 语法 : `void updateBirthday(int id, String birthday)`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件: 得到User数据库服务的引用
+  * 后置条件: 更新用户生日
 * AccountService.registerAsVIP
   * 语法 : `void registerAsVIP(int id);`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件: 得到VIP数据库服务的引用
+  * 后置条件: 将用户注册为VIP
 * AccountService.freezeVIP
   * 语法 : `void freezeVIP(int id);`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件: 得到VIP数据库服务的引用
+  * 后置条件: 停止用户的VIP服务
 * AccountService.updatePortrait
   * 语法 : `ResponseVO updatePortrait(int userId, String url);`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件:得到User数据库服务的引用
+  * 后置条件: 更新头像
 * AccountService.chargeCredit
   * 语法 : `ResponseVO chargeCredit(int userId, int change, String reason);`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件: 得到Credit数据库服务的引用
+  * 后置条件: 添加用户的信誉变更记录
 * AccountService.getUserCreditChanges
   * 语法 : `ResponseVO getUserCreditChanges(int userId);`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件: 得到Credit数据库服务的引用
+  * 后置条件: 获取用户的信誉变更记录
 * AccountService.getAllUsers
   * 语法 : `List<UserVO> getAllUsers();`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件:得到User数据库服务的引用
+  * 后置条件: 获取所有UserPO
 * AccountService.getAllPhoneNumOfSalesPerson
   * 语法 : `List<String> getAllPhoneNumOfSalesPerson();`
-  * 前置条件:
-  * 后置条件:
+  * 前置条件:得到User数据库服务的引用
+  * 后置条件:获取所有网站营销人员的电话号
+* CollectionService.addCollection
+  * 语法 :`ResponseVO addCollection(CollectionVO collectionVO);`
+  * 前置条件: 获取Collection数据库服务的引用
+  * 后置条件:添加Collection
+* CollectionService.getUserCollection
+  * 语法 :`List<CollectionVO> getUserCollection(Integer userId);`
+  * 前置条件:获取Collection数据库服务的引用
+  * 后置条件:获取用户的所有收藏
+* CollectionService.getHotelCollection
+  * 语法 :`Integer getHotelCollection(Integer hotelId);`
+  * 前置条件:获取Collection数据库服务的引用
+  * 后置条件:获取酒店的所有收藏数量
+* CollectionService.userCollection
+  * 语法 :`Boolean userCollection(Integer userId, Integer hotelId);`
+  * 前置条件:获取Collection数据库服务的引用
+  * 后置条件:判断用户是否收藏了该酒店
+* CollectionService.annulCollectionByUserId
+  * 语法 :`ResponseVO annulCollectionByUserId(Integer hotelId, Integer userId);`
+  * 前置条件:获取Collection数据库服务的引用，用户已收藏该酒店
+  * 后置条件:删除用户对这家酒店的收藏
 
 需要的服务（需接口）
 
-|              服务名              | 服务                                       |
-| :------------------------------: | :----------------------------------------- |
-|    `BeanUtils.copyProperties`    | 从userVO拷贝到user里                       |
-| `AccountMapper.createNewAccount` | 在数据库中插入新账号的UserPO对象           |
-| `AccountMapper.getAccountByName` | 通过user的email取到UserVO对象              |
-|  `AccountMapper.getAccountById`  | 通过user的id取到UserVO对象                 |
-|  `AccountMapper.updateAccount`   | 找到对应id的用户，更新用户名、手机号、密码 |
+|                服务名                 |                    服务                    |
+| :-----------------------------------: | :----------------------------------------: |
+|      `BeanUtils.copyProperties`       |            从userVO拷贝到user里            |
+|   `AccountMapper.createNewAccount`    |      在数据库中插入新账号的UserPO对象      |
+|   `AccountMapper.getAccountByName`    |         通过user的名称取到User对象         |
+|   `AccountMapper.getAccountByEmail`   |           通过email取到User对象            |
+|    `AccountMapper.updatePassword`     |                  更新密码                  |
+|     `AccountMapper.updateCredit`      |                更新信用变更                |
+|    `AccountMapper.updateCorproate`    |                更新企业信息                |
+|    `AccountMapper.updateBirthday`     |                  更新生日                  |
+|     `AccountMapper.updateVIPType`     |                更新VIP类型                 |
+|    `AccountMapper.updatePortrait`     |                更新头像url                 |
+|     `AccountMapper.chargeCredit`      |               获取Credit记录               |
+|      `AccountMapper.getAllUsers`      |               获取所有的User               |
+|    `AccountMapper.getAccountById`     |          通过user的id取到User对象          |
+|     `AccountMapper.updateAccount`     | 找到对应id的用户，更新用户名、手机号、密码 |
+|       `CreditMapper.getCredit`        |        根据creditId获取信用变更记录        |
+|      `CreditMapper.argueCredit`       |                信用变更申诉                |
+|    `CreditMapper.getArgueCredits`     |           获取申诉的信誉变更记录           |
+|      `CreditMapper.handleArgue`       |              处理信誉变更申诉              |
+|       `CreditMapper.addCredit`        |              添加信誉变更记录              |
+|     `CreditMapper.getUserCredit`      |           获取用户的信誉变更记录           |
+|   `CollectionMapper.addCollection`    |                  添加收藏                  |
+|  `CollectionMapper.annulCollection`   |                  撤销收藏                  |
+|  `CollectionMapper.getUseCollection`  |               获取用户的收藏               |
+| `CollectionMapper.getHotelCollection` |             获取酒店的所有收藏             |
+
+##### QuestionBl模块的接口规范
+
+提供的服务（供接口）
+
+* AnswerService.addAnswer
+  * 语法 : `ResponseVO addAnswer(AnswerVO answerVO);`
+  * 前置条件 :获得Answer数据库的引用
+  * 后置条件 :添加Answer
+* AnswerService.getAllAnswers
+  * 语法 : `List<AnswerVO> getAllAnswers();`
+  * 前置条件 :获得Answer数据库的引用
+  * 后置条件 :获取所有的Answer
+* AnswerService.getQuestionAnswers
+  * 语法 : `List<AnswerVO> getQuestionAnswers(Integer questionId);`
+  * 前置条件 :获得Answer数据库的引用
+  * 后置条件 :获得对应问题的所有回答
+* AnswerService.annulAnswer
+  * 语法 : `ResponseVO annulAnswer(Integer answerId);`
+  * 前置条件 : 获得Answer数据库的引用
+  * 后置条件 : 删除回答
+* QuestionService.addQuestion
+  * 语法 : `ResponseVO addQuestion(QuestionForm questionForm);`
+  * 前置条件 : 获得Question数据库服务的引用
+  * 后置条件 : 添加问题
+* QuestionService.annulQuestion
+  * 语法 : `ResponseVO annulQuestion(Integer questionId);`
+  * 前置条件 :获得Question数据库服务的引用
+  * 后置条件 : 将问题标记为不可达
+* QuestionService.getHotelQuestion
+  * 语法 : `List<QuestionVO> getHotelQuestion(Integer hotelId);`
+  * 前置条件 : 获得Question和Answer数据库服务的引用
+  * 后置条件 : 获取酒店的所有问题和对应答案
+* QuestionService.getUserQuestion
+  * 语法 : `List<QuestionVO> getUserQuestion(Integer userId);`
+  * 前置条件 : 获得Question和Answer数据库服务的引用
+  * 后置条件 : 获取用户的所有问题和对应答案
+
+需要的服务（需接口）
+
+|              服务名               |        服务        |
+| :-------------------------------: | :----------------: |
+|     `AnswerMapper.addAnswer`      |      添加回答      |
+|   `AnswerMapper.getAllAnswers`    |   获取所有的回答   |
+| `AnswerMapper.getQuestionAnswers` | 获得问题的所有回答 |
+|    `AnswerMapper.annulAnswer`     |      删除回答      |
+|   `QuestionMapper.addQuestion`    |      添加问题      |
+|  `QuestionMapper.annulQuestion`   |      删除问题      |
+| `QuestionMapper.getHotelQuestion` |   获取酒店的问题   |
+| `QuestionMapper.getUserQuestion`  |   获取用户的问题   |
+
+##### VIPBl模块的接口规范
+
+提供的服务（供接口）
+
+* LevelService.formulateVIPLevel
+  * 语法：`ResponseVO formulateVIPLevel(Integer level, String type, Integer requestConsumption, double reduction);`
+  * 前置条件：
+  * 后置条件：
+* LevelService.getTheRequestOfLevel
+  * 语法：`ResponseVO getTheRequestOfLevel(Integer level, String type);`
+  * 前置条件:获得VIPLevel数据库服务的引用
+  * 后置条件：获取对应VIP等级需要的消费额
+* VIPService.registerAsClientVIP
+  * 语法：`ResponseVO registerAsClientVIP(Integer userId, String Birthday);`
+  * 前置条件：获得VIP数据库服务的引用
+  * 后置条件：注册为普通会员
+* VIPService.freezeClientVIP
+  * 语法：`ResponseVO freezeClientVIP(Integer userId);`
+  * 前置条件：获得VIP数据库服务的引用，被认证为网站管理员
+  * 后置条件：停用该普通会员
+* VIPService.restoreClientVIP
+  * 语法：`ResponseVO restoreClientVIP(Integer userId);`
+  * 前置条件：获得VIP数据库服务的引用，被认证为网站管理员，会员被冻结
+  * 后置条件：恢复普通会员的特权
+* VIPService.getVIPByUserId
+  * 语法：`ResponseVO getVIPbyUserId(Integer userId);`
+  * 前置条件：获得VIP数据库服务的引用
+  * 后置条件：根据ID获取会员情况
+* VIPService.addVIPClientConsumption
+  * 语法：`ResponseVO addVIPClientConsumption(Integer userId, Integer amount);`
+  * 前置条件：获得VIP数据库服务的引用
+  * 后置条件：添加个人会员的消费额度
+* VIPService.registerAsCorpVIP
+  * 语法：`ResponseVO registerAsCorpVIP(String corporationName);`
+  * 前置条件：获得VIP数据库服务的引用
+  * 后置条件：注册为企业会员
+* VIPService.freezeCorpVIP
+  * 语法：`ResponseVO freezeCorpVIP(String corporationName);`
+  * 前置条件：获得VIP数据库服务的引用，被认证为网站管理员
+  * 后置条件：停用企业会员服务
+* VIPService.restoreCorpVIP
+  * 语法：`ResponseVO restoreCorpVIP(String corporationName);`
+  * 前置条件：获得VIP数据库服务的引用，被认证为网站管理员，会员被冻结
+  * 后置条件：恢复企业会员服务
+* VIPService.getVIPByCorpName
+  * 语法：`ResponseVO getVIPbyCorpName(String corporationName);`
+  * 前置条件：获得VIP数据库服务的引用
+  * 后置条件：根据企业名获取VIP类型
+* VIPService.addVIPCorpConsumption
+  * 语法：`ResponseVO addVIPCorpConsumption(String corporationName, Integer amount);`
+  * 前置条件：获得VIP数据库服务的引用
+  * 后置条件：添加企业VIP消费
+* VIPService.VIPCorpCheck
+  * 语法：`boolean VIPCorpCheck(String corporationName);`
+  * 前置条件：获得VIP数据库服务的引用
+  * 后置条件：检查企业是否是VIP
+* VIPService.getAllVIPClient
+  * 语法：ResponseVO getAllVIPClient();``
+  * 前置条件：获得VIP数据库服务的引用
+  * 后置条件：获取所有个人VIP
+* VIPService.getAllVIPCorp
+  * 语法：`ResponseVO getAllVIPCorp();`
+  * 前置条件：获得VIP数据库服务的引用
+  * 后置条件：获取所有企业VIP
+
+需要的服务（需接口）
+
+|               服务名                |           服务           |
+| :---------------------------------: | :----------------------: |
+| `LevelMapper.getTheRequestOfLevel`  | 获取对应等级需要的消费额 |
+|      `LevelMapper.changeLevel`      |       修改VIP等级        |
+|   `LevelMapper.formulateVIPLevel`   |   修改VIP需要的消费额    |
+|   `LevelMapper.getTheReduOfLevel`   |  获取对应VIP的折扣额度   |
+|   `AccountService.registerAsVIP`    |      注册成VIP客户       |
+|   `AccountService.updateBirthday`   |       更新生日信息       |
+|     `AccountService.freezeVIP`      |         停用VIP          |
+|   `VIPMapper.registerAsClientVIP`   |      注册成VIP客户       |
+|     `VIPMapper.freezeClientVIP`     |       停用VIP服务        |
+|    `VIPMapper.restoreClientVIP`     |       恢复VIP服务        |
+|     `VIPMapper.getVIPByUserId`      |    根据用户ID获取VIP     |
+| `VIPMapper.addVIPClientConsumption` |       添加消费记录       |
+|      `VIPMapper.clientLevelUp`      |       升级VIP等级        |
+|    `VIPMapper.registerAsCorpVIP`    |      注册成企业VIP       |
+|      `VIPMapper.freezeCorpVIP`      |     停用企业VIP服务      |
+|     `VIPMapper.restoreCorpVIP`      |     恢复企业VIP服务      |
+|    `VIPMapper.getVIPByCorpName`     |  根据企业名获取VIP服务   |
+|  `VIPMapper.addVIPCorpConsumption`  |     升级企业VIP等级      |
+|  `VIPMapper.addVIPCorpConsumption`  |     添加企业消费额度     |
+|       `VIPMapper.corpLevelUp`       |     升级企业VIP等级      |
+|     `VIPMapper.getAllVIPClient`     |    获取所有的个人VIP     |
+|      `VIPMapper.getAllVIPCorp`      |    获取所有的企业VIP     |
 
 ### 数据层分解
 
