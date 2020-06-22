@@ -2,13 +2,14 @@
 
 ## 文档修改历史
 
-|           修改人员           | 日期      | 修改原因                                                         | 版本号   |
-| :--------------------------: | --------- | ---------------------------------------------------------------- | -------- |
-| 庄子元、程荣鑫、韩禧、郭礼华 | 2020.4.19 | 填写初始文档，添加TODO标记                                       | 初稿     |
-|            程荣鑫            | 2020.4.19 | 添加目录，完成组合视图                                           | 草稿v1.0 |
-|            郭礼华            | 2020.4.23 | 添加了架构设计中的模块职责和用户界面层分解                       | 草稿v1.0 |
+|           修改人员           | 日期      | 修改原因                                                     | 版本号   |
+| :--------------------------: | --------- | ------------------------------------------------------------ | -------- |
+| 庄子元、程荣鑫、韩禧、郭礼华 | 2020.4.19 | 填写初始文档，添加TODO标记                                   | 初稿     |
+|            程荣鑫            | 2020.4.19 | 添加目录，完成组合视图                                       | 草稿v1.0 |
+|            郭礼华            | 2020.4.23 | 添加了架构设计中的模块职责和用户界面层分解                   | 草稿v1.0 |
 |            庄子元            | 2020.4.24 | 添加了架构涉及中业务逻辑层的模块职责和用户界面分解，完成逻辑视图 | 草稿v1.0 |
-|             韩禧             | 2020.4.25 | 完善了数据层                                                     | 草稿v1.0 |
+|             韩禧             | 2020.4.25 | 完善了数据层                                                 | 草稿v1.0 |
+|            郭礼华            | 2020.5.xx | 更新了架构设计中的模块职责                                   |          |
 
 ## 目录
 
@@ -119,32 +120,35 @@
 
 #### 模块视图
 
-![module_view](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/se_service_module.jpg)
+![](https://colarhua-pic.oss-cn-shenzhen.aliyuncs.com/software-engineering/service_module.png)
+
+
 
 #### 各层职责
 
-|     层     | 职责                                                     |
-| :--------: | -------------------------------------------------------- |
-|  启动模块  | 负责初始化网络通信机制以及数据服务的连接，并启动用户界面 |
-|   展示层   | 基于Web的互联网酒店预定系统的客户端用户界面              |
-|  接口模块  | 负责客户端和服务器端的通信及数据传递                     |
-| 业务逻辑层 | 对于用户界面的输入进行响应并执行业务处理逻辑             |
-| 数据服务层 | 为业务逻辑层提供数据层服务接口                           |
-|   数据层   | 负责数据的持久化和访问                                   |
+|       层       | 职责                                                         |
+| :------------: | ------------------------------------------------------------ |
+|     页面层     | 基于Web的互联网酒店预定系统的客户端用户界面                  |
+|   页面状态层   | 负责存储用户页面的数据，并根据用户触发的事件以及服务端返回的信息更改相应的状态 |
+|  前后端接口层  | 负责发送与接收REST API请求                                   |
+| 业务逻辑接口层 | 为客户端提供相应的业务逻辑接口                               |
+|   业务逻辑层   | 负责执行业务处理逻辑                                         |
+|   数据服务层   | 为业务逻辑层提供数据层服务接口                               |
+|     数据层     | 负责数据的持久化和访问                                       |
 
    每一层只是使用下方直接接触的层，层与层之间仅仅是通过接口的调用来完成的，层之间调用的接口如下所示。
 
 #### 层之间调用接口
 
-|                                                                                                                     接口                                                                                                                      | 服务调用方         | 服务提供方         |
-| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | ------------------ | ------------------ |
-|                                                                                adminAPI<br/>couponAPI<br/>hotelAPI<br>hotelManagerAPI<br/>orderAPI<br/>useAPI                                                                                 | 客户端页面         | 服务器端展示层     |
-| AccountService<br>AdminService<br/>HotelService<br/>RoomService<br/>OrderService<br/>CouponMatchStrategy<br/>CouponService<br/>HotelSearchService<br/>AnswerService<br/>QuestionService<br/>CollectionService<br/>LevelService<br/>VIPService | 服务器端展示层     | 服务器端业务逻辑层 |
-|                     AccountMapper<br/>AdminMapper<br/>HotelMapper<br/>RoomMapper<br/>OrderMapper<br/>CouponMapper<br/>AnswerMapper<br/>QuestionMapper<br/>CollectionMapper<br/>CreditMapper<br/>LevelMapper<br/>VIPMapper                     | 服务器端业务逻辑层 | 服务器端数据层     |
+|                             接口                             | 服务调用方         | 服务提供方         |
+| :----------------------------------------------------------: | ------------------ | ------------------ |
+| adminAPI<br/>couponAPI<br/>hotelAPI<br>hotelManagerAPI<br/>membershipAPI<br/>orderAPI<br/>salesPersonAPI<br/>useAPI | 页面状态层         | 前后端接口层       |
+| AccountService<br>AdminService<br/>HotelService<br/>RoomService<br/>OrderService<br/>CouponMatchStrategy<br/>CouponService<br/>HotelSearchService<br/>AnswerService<br/>QuestionService<br/>CollectionService<br/>LevelService<br/>VIPService | 前后端接口层       | 服务器端业务逻辑层 |
+| AccountMapper<br/>CreditMapper<br/>AdminMapper<br/>HotelMapper<br/>LikeMapper<br/>RoomMapper<br/>OrderMapper<br/>CouponMapper<br/>AnswerMapper<br/>QuestionMapper<br/>CollectionMapper<br/>LevelMapper<br/>VIPMapper | 服务器端业务逻辑层 | 服务器端数据层     |
 
-借用添加酒店用例来说明层之间的调用，如图所示。每一层之间都是由上层依赖了一个接口（需接口），而下层实现这个接口（供接口）。HotelBLService 提供了 HotelUI 界面所需要的所有业务逻辑功能。HotelMapper 提供了对数据库的增、删、改、查等操作。这样的实现就大大降低了层与层之间的耦合。
+借用添加酒店用例来说明层之间的调用，如图所示，每一层之间都是由上层依赖了一个接口（需接口），而下层实现这个接口（供接口）。store/Hotel提供了HotelView所需要的数据以及方法，HotelAPI和HotelController共同提供了前后端交互所需要的信息传送的功能，HotelBLService 提供了 Hotel模块所需要的所有业务逻辑功能，HotelMapper 提供了对数据库的增、删、改、查等操作。这样的实现就大大降低了层与层之间的耦合。
 
-![interface](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/se_hotelbl_interface.jpg)
+![interface](https://colarhua-pic.oss-cn-shenzhen.aliyuncs.com/software-engineering/Class Diagram.png)
 
 ### 用户界面层分解
 
