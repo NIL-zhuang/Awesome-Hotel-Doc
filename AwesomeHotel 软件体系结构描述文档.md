@@ -822,7 +822,7 @@
 
 ### 数据层分解
 
-数据层主要给业务逻辑层提供数据访问服务，包括对持久化数据的增、删、改、查。Admin业务逻辑需要的服务由AdminMapper接口提供。本酒店房间预订系统主要以数据库形式存储。数据层模块的描述具体如下图：
+数据层主要给业务逻辑层提供数据访问服务，包括对持久化数据的增、删、改、查。例如Admin业务逻辑需要的服务由AdminMapper接口提供。本酒店房间预订系统主要以数据库形式存储。数据层模块的描述具体如下图：
 
 ![data_layer](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/se_data_layer.png)
 
@@ -830,51 +830,438 @@
 
 数据层模块的职责如下表所示：
 
-| 模块                   | 职责                                                                            |
-| ---------------------- | ------------------------------------------------------------------------------- |
-| `AdminMapper`          | 持久化数据库的接口，提供集体载入、集体保存、增、删、改、查服务                  |
-| `AdminMapperMySqlImpl` | 基于MySql数据库的持久化数据库的接口，提供集体载入、集体保存、增、删、改、查服务 |
+| 模块                        | 职责                                    |
+| --------------------------- | --------------------------------------- |
+| `AdminMapper`               | Admin服务的数据层接口                   |
+| `AdminMapperMySqlImpl`      | Admin服务在User数据库的持久化数据库接口 |
+| `CollectionMapper`          | Collection数据库的数据层接口            |
+| `CollectionMapperMySqlImpl` | Collection数据库的持久化数据库接口      |
+| `CouponMapper`              | Coupon数据库的数据层接口                |
+| `CouponMapperMySqlImpl`     | Coupon数据库的持久化数据库接口          |
+| `HotelMapper`               | Hotel数据库的数据层接口                 |
+| `HotelMapperMySqlImpl`      | Hotel数据库的持久化数据库接口           |
+| `RoomMapper`                | Room数据库的数据层接口                  |
+| `RoomMapperMySqlImpl`       | Room数据库的持久化数据库接口            |
+| `OrderMapper`               | Order数据库的数据层接口                 |
+| `OrderMapperMySqlImpl`      | Order数据库的持久化数据库接口           |
+| `AnswerMapper`              | Answer数据库的数据层接口                |
+| `AnswerMapperMySqlImpl`     | Answer数据库的持久化数据库接口          |
+| `QuestionMapper`            | Question数据库的数据层接口              |
+| `QuestionMapperMySqlImpl`   | Question数据库的持久化数据库接口        |
+| `AccountMapper`             | User数据库的数据层接口                  |
+| `AccountMapperMySqlImpl`    | User数据库的持久化数据库接口            |
+| `CreditMapper`              | Credit数据库的数据层接口                |
+| `CreditMapperMySqlImpl`     | Credit数据库的持久化数据库接口          |
+| `LevelMapper`               | Level数据库的数据层接口                 |
+| `LevelMapperMySqlImpl`      | Level数据库的持久化数据库接口           |
+| `VIPMapper`                 | VIP数据库的数据层接口                   |
+| `VIPMapperMySqlImpl`        | VIP数据库的持久化数据库接口             |
 
 #### 数据层模块的接口规范
 
 数据层模块的接口规范如下表所示：
 
-**提供的服务（供接口）**
+##### AdminMapper
 
-| `AdminMapper.createNewAccount` | 语法     | `public UserPO createNewAccount() throws RemoteException;` |
-| ------------------------------ | -------- | ---------------------------------------------------------- |
-|                                | 前置条件 | 每一个历史用户的ID存在且唯一                               |
-|                                | 后置条件 | 在数据库中插入新账号的UserPO对象                           |
+提供的服务（供接口）
 
-| `AdminMapper.getAccountByName` | 语法     | `public UserVO getAccountByName(String email) throws RomoteException;` |
-| ------------------------------ | -------- | ---------------------------------------------------------------------- |
-|                                | 前置条件 | 每一个历史用户的邮箱存在且唯一                                         |
-|                                | 后置条件 | 通过user的email取到UserVO对象                                          |
+* AdminMapper.addManager
+  * 语法：`int addManager(User user);`
+  * 前置条件 : 每一个历史用户的ID存在且唯一
+  * 后置条件 : 在数据库中插入新的manager对象
+* AdminMapper.addSalesPerson
+  * 语法 : `int addSalesPerson(User user)`
+  * 前置条件 :每一个历史用户的ID存在且唯一
+  * 后置条件 : 在数据库中插入网站营销人员对象
+* AdminMapper.getAllManagers
+  * 语法 : `List<User> getAllManagers()`
+  * 前置条件 : 每一个历史用户的ID存在且唯一
+  * 后置条件 : 获取所有的酒店管理员
+* AdminMapper.getHotelManagers
+  * 语法 : `List<User> getHotelManagers(@Param("hotelId") Integer hotelId);`
+  * 前置条件 : 每一个历史用户的ID存在且唯一
+  * 后置条件 : 获取对应酒店的所有管理员
+* AdminMapper.getAllSalesPerson
+  * 语法 : `List<User> getAllSalesPerson();`
+  * 前置条件 : 每一个历史用户的ID存在且唯一
+  * 后置条件 : 获取所有的网站营销人员
+* AdminMapper.deleteManager
+  * 语法 : `int deleteManager(Integer id);`
+  * 前置条件 : 每一个历史用户的ID存在且唯一
+  * 后置条件 : 删除酒店管理员
+* AdminMapper.deleteSalesPerson
+  * 语法 : `int deleteSalesPerson(Integer id);`
+  * 前置条件 : 每一个历史用户的ID存在且唯一
+  * 后置条件 : 删除网站营销人员
 
-| `AdminMapper.getAccountById` | 语法     | `public UserPO getAccountById(long id) throws RomoteException;` |
-| ---------------------------- | -------- | --------------------------------------------------------------- |
-|                              | 前置条件 | 每一个历史用户的ID存在且唯一                                    |
-|                              | 后置条件 | 通过ID查找一个用户，并返回UserPO                                |
+##### CollectionMapper
 
-| `AdminMapper.updateAccount` | 语法     | `public void updateAccount(long id) throws RemoteException；` |
-| --------------------------- | -------- | ------------------------------------------------------------- |
-|                             | 前置条件 | 每一个历史用户（po）的ID存在且唯一                            |
-|                             | 后置条件 | 找到对应id的用户，更新用户名、手机号、密码                    |
+* CollectionMapper.addCollection
+  * 语法 : `int addCollection(Collection collection);`
+  * 前置条件 : 每个Collection中userId和HotelId是超键
+  * 后置条件 : 向数据库中添加Collection
+* CollectionMapper.annulCollection
+  * 语法 : `int annualCollection(@Param("id") int id);`
+  * 前置条件 : 每个Collection中userId和HotelId是超键
+  * 后置条件 : 从数据库中删除Collection条目
+* CollectionMapper
+  * 语法 : `List<Collection> getUserCollection(@Param("userId") int userId);`
+  * 前置条件 : 每个Collection中userId和HotelId是超键
+  * 后置条件 : 获取用户的所有收藏
+* CollectionMapper
+  * 语法 : `List<Collection> getHotelCollection(@Param("hotelId") int hotelId);`
+  * 前置条件 : 每个Collection中userId和HotelId是超键
+  * 后置条件 : 获得所有酒店的收藏
 
-| `AdminMapper.delete` | 语法     | `public void delete(UserPO po) throws RemoteException;` |
-| -------------------- | -------- | ------------------------------------------------------- |
-|                      | 前置条件 | 每一个历史用户（po）的ID存在且唯一                      |
-|                      | 后置条件 | 删除一个用户（po）（但ID不会重新分发）                  |
+##### CouponMapper
 
-| `AdminMapper.init` | 语法     | `public void init() throws RemoteException；` |
-| ------------------ | -------- | --------------------------------------------- |
-|                    | 前置条件 | 无                                            |
-|                    | 后置条件 | 初始化持久化数据库                            |
+* CouponMapper.insertCoupon
+  * 语法 : `int insertCoupon(Coupon coupon);`
+  * 前置条件 : 每个Coupon的Id都唯一
+  * 后置条件 : 向Coupon数据库中插入coupon
+* CouponMapper.selectByHotelId
+  * 语法 : `List<Coupon> selectByHotelId(Integer hotelId);`
+  * 前置条件 : 每个Coupon的Id都唯一
+  * 后置条件 : 根据HotelId获得所有的coupon
+* CouponMapper.annulCoupon
+  * 语法 : `void annualCoupon(Integer couponId);`
+  * 前置条件 : 每个Coupon的Id都唯一
+  * 后置条件 : 将对应coupon设为无效
+* CouponMapper.getWebCoupon
+  * 语法 : `List<Coupon> getWebCoupon();`
+  * 前置条件 : 每个Coupon的Id都唯一
+  * 后置条件 : 获取网站的coupon
+* CouponMapper.getBizRegionCoupon
+  * 语法 : `List<Coupon> getBizRegionCoupon(String bizRegion);`
+  * 前置条件 : 每个Coupon的Id都唯一
+  * 后置条件 : 获取对应商圈的coupon
 
-| `AdminMapper.finish` | 语法     | `public void finish() RemoteException;` |
-| -------------------- | -------- | --------------------------------------- |
-|                      | 前置条件 | 无                                      |
-|                      | 后置条件 | 结束持久化数据库的使用                  |
+##### HotelMapper
+
+* HotelMapper.insertHotel
+  * 语法 : `int insertHotel(Hotel hotel);`
+  * 前置条件 : 每个Hotel的hotelId都是不同的
+  * 后置条件 : 在hotel数据库中插入hotel
+* HotelMapper.updateHotelName
+  * 语法 : `int updateHotelName(@Param("id") Integer id, @Param("hotelName") String hotelName);`
+  * 前置条件 : 每个Hotel的hotelId都是不同的
+  * 后置条件 : 更新酒店名称
+* HotelMapper.updateHotelAddress
+  * 语法 : `int updateHotelAddress(@Param("id") Integer id, @Param("address") String hotelAddress);`
+  * 前置条件 : 每个Hotel的hotelId都是不同的
+  * 后置条件 : 更新酒店地址
+* HotelMapper.updateHotelDescription
+  * 语法 : `int updateHotelDescription(@Param("id") Integer id, @Param("description") String hotelDescription);`
+  * 前置条件 : 每个Hotel的hotelId都是不同的
+  * 后置条件 : 更新酒店描述
+* HotelMapper.deleteHotel
+  * 语法 : `int deleteHotel(Integer id);`
+  * 前置条件 : 每个Hotel的hotelId都是不同的
+  * 后置条件 : 删除对应酒店
+* HotelMapper.selectAllHotel
+  * 语法 : `List<Hotel> selectAllHotel();`
+  * 前置条件 : 每个Hotel的hotelId都是不同的
+  * 后置条件 : 获取所有的酒店PO
+* HotelMapper.selectById
+  * 语法 : `Hotel selectById(@Param("id") Integer id);`
+  * 前置条件 : 每个Hotel的hotelId都是不同的
+  * 后置条件 : 根据酒店Id获取酒店
+* HotelMapper.updatePicture
+  * 语法 : `int updatePicture(@Param("id") Integer id, @Param("url") String url);`
+  * 前置条件 : 每个Hotel的hotelId都是不同的
+  * 后置条件 : 更新酒店图片
+* HotelMapper.updateHotelPoints
+  * 语法 : `int updateHotelPoints(@Param("id") Integer id, @Param("commentTime") Integer commentTime, @Param("points") double points, @Param("sanitation") double sanitation, @Param("environment") double environment, @Param("service") double service, @Param("equipment") double equipment);`
+  * 前置条件 : 每个Hotel的hotelId都是不同的
+  * 后置条件 : 更新酒店评论及评分
+
+##### RoomMapper
+
+* RoomMapper.updateRoomInfo
+  * 语法 : `int updateRoomInfo(@Param("hotelId") Integer hotelId,@Param("roomType") String roomType,@Param("minNum") Integer minNum);`
+  * 前置条件 : Room表的hotelId和roomType都构成超键
+  * 后置条件 : 更新酒店房间信息
+* RoomMapper.insertRoom
+  * 语法 : `int insertRoom(HotelRoom hotelRoom);`
+  * 前置条件 : Room表的hotelId和roomType都构成超键
+  * 后置条件 : 插入新的房间类型
+* RoomMapper.selectRoomByHotelId
+  * 语法 : `List<HotelRoom> selectRoomsByHotelId(@Param("hotelId") Integer hotelId);`
+  * 前置条件 : Room表的hotelId和roomType都构成超键
+  * 后置条件 : 获取酒店的房间信息
+* RoomMapper.getRoomCurNum
+  * 语法 : `int getRoomCurNum(@Param("hotelId") Integer hotelId,@Param("roomType") String roomType);`
+  * 前置条件 : Room表的hotelId和roomType都构成超键
+  * 后置条件 : 获取酒店的当前房间剩余数量
+* RoomMapper.updateRoomNum
+  * 语法 : `void updateRoomNum(@Param("hotelId") Integer hotelId, @Param("roomType") String roomType, @Param("total") Integer total);`
+  * 前置条件 : Room表的hotelId和roomType都构成超键
+  * 后置条件 : 更新房间数量
+* RoomMapper.deleteRoom
+  * 语法 : `void deleteRoom(@Param("hotelId") Integer hotelId, @Param("roomType") String roomType);`
+  * 前置条件 : Room表的hotelId和roomType都构成超键
+  * 后置条件 : 删除酒店房间
+
+##### OrderMapper
+
+* OrderMapper.addOrder
+  * 语法 : `void addOrder(Order order);`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 添加订单
+* OrderMapper.getAllOrders
+  * 语法 : `List<Order> getAllOrders();`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 获取所有订单
+* OrderMapper.getUserOrders
+  * 语法 : `List<Order> getUserOrders(@Param("userid") int userid);`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 获取用户订单
+* OrderMapper.annulOrder
+  * 语法 : `void annulOrder(@Param("orderid") int orderid);`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 撤销订单
+* OrderMapper.checkIn
+  * 语法 : `int checkIn(@Param("orderId") int orderId);`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 入住
+* OrderMapper.finishOrder
+  * 语法 : `int finishOrder(@Param("orderId") int orderId);`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 完成订单
+* OrderMapper.abnormalOrder
+  * 语法 : `int abnormalOrder(@Param("orderId") int orderId);`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 将订单标记为异常
+* OrderMapper.getOrderById
+  * 语法 : `Order getOrderById(@Param("orderid") int orderid);`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 根据orderId获取订单
+* OrderMapper.updateComment
+  * 语法 : `int updateComment(Comment comment);`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 添加订单评论
+* OrderMapper.getComment
+  * 语法 : `Comment getComment(@Param("orderId") int orderId);`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 获取订单评论
+* OrderMapper.getAllComment
+  * 语法 : `List<Comment> getAllComment();`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 获取所有订单的评价
+* OrderMapper.getUserComment
+  * 语法 : `List<Comment> getUserComment(@Param("userId") Integer userId);`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 获取用户所有的评价
+* OrderMapper.getHotelComment
+  * 语法 : `List<Comment> getHotelComment(@Param("hotelId") Integer hotelId);`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 获取对酒店的评价
+* OrderMapper.annulComment
+  * 语法 : `int annulComment(@Param("orderId") Integer orderId);`
+  * 前置条件 : 每一行OrderId是唯一的
+  * 后置条件 : 撤销评价
+
+##### AnswerMapper
+
+* AnswerMapper.addAnswer
+  * 语法 : `int addAnswer(Answer answer);`
+  * 前置条件 : AnswerId在数据库中是唯一的
+  * 后置条件 : 为Answer添加答案
+* AnswerMapper.getAllAnswers
+  * 语法 : `List<Answer> getAllAnswers();`
+  * 前置条件 : AnswerId在数据库中是唯一的
+  * 后置条件 : 获取所有的Answer
+* AnswerMapper.getQuestionAnswers
+  * 语法 : `List<Answer> getQuestionAnswers(@Param("questionId") Integer questionId);`
+  * 前置条件 : AnswerId在数据库中是唯一的
+  * 后置条件 : 获取问题的所有答案
+* AnswerMapper.annulAnswers
+  * 语法 : `int annulAnswer(@Param("answerId") Integer answerId);`
+  * 前置条件 : AnswerId在数据库中是唯一的
+  * 后置条件 : 撤销答案
+
+##### QuestionMapper
+
+* QuestionMapper.addQuestion
+  * 语法 : `int addQuestion(Question question);`
+  * 前置条件 : QuestionId在数据库是唯一的
+  * 后置条件 : 添加一个问题
+* QuestionMapper.annulQuestion
+  * 语法 : `int annulQuestion(@Param("id") int questionId);`
+  * 前置条件 : QuestionId在数据库是唯一的
+  * 后置条件 : 将问题设为无法访问
+* QuestionMapper.getHotelQuestion
+  * 语法 : `List<Question> getHotelQuestion(@Param("hotelId") int hotelId);`
+  * 前置条件 : QuestionId在数据库是唯一的
+  * 后置条件 : 获取一个酒店的所有问题
+* QuestionMapper.getUserQuestion
+  * 语法 : `List<Question> getUserQuestion(@Param("userId") int userId);`
+  * 前置条件 : QuestionId在数据库是唯一的
+  * 后置条件 : 获取用户提出的所有问题
+
+##### AccountMapper
+
+* AccountMapper.createNewAccount
+  * 语法 : `void createNewAccount(User user);`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 创建新账号
+* AccountMapper.getAccountByEmail
+  * 语法 : `User getAccountByEmail(@Param("email") String email);`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 根据邮箱获取User
+* AccountMapper.getAccountById
+  * 语法 : `User getAccountById(@Param("id") int id);`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 根据Id获取账号
+* AccountMapper.updateAccount
+  * 语法 : `void updateAccount(@Param("id") int id, @Param("userName") String username, @Param("phoneNumber") String phonenumber, @Param("corporation") String corporation);`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 更新用户账号信息
+* AccountMapper.updatePassword
+  * 语法 : `void updatePassword(@Param("id") int id, @Param("password") String password);`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 更新用户密码
+* AccountMapper.updateCredit
+  * 语法 : `void updateCredit(@Param("id") int id, @Param("credit") double credit);`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 更新信用分
+* AccountMapper.updateBirthday
+  * 语法 : `void updateBirthday(@Param("id") int id, @Param("birthday") String birthday);`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 更新生日信息
+* AccountMapper.updateVIPType
+  * 语法 : `void updateVIPType(@Param("id") int id, @Param("vipType") VIPType vipType);`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 注册为VIP
+* AccountMapper.updateCorporate
+  * 语法 : `void updateCorporate(@Param("id") int id, @Param("corporate") String corporate);`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 更新企业信息
+* AccountMapper.updateAnnulTime
+  * 语法 : `void updateAnnulTime(@Param("id") int id, @Param("time") int time);`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 减少可用的免扣信誉分次数
+* AccountMapper.updatePortrait
+  * 语法 : `void updatePortrait(@Param("id") Integer id, @Param("url") String url);`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 更新头像
+* AccountMapper.chargeCredit
+  * 语法 : `void chargeCredit(@Param("id") Integer id, @Param("change") Integer change);`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 添加信誉积分信息
+* AccountMapper.getAllUsers
+  * 语法 : `List<User> getAllUsers();`
+  * 前置条件 : User的邮箱和UserId是唯一的
+  * 后置条件 : 获取所有User
+
+##### CreditMapper
+
+* CreditMapper.getCredit
+  * 语法 : `Credit getCredit(@Param("id") Integer id);`
+  * 前置条件 : 每个Credit都有唯一的CreditId
+  * 后置条件 : 获取对应的Credit
+* CreditMapper.addCredit
+  * 语法 : `int addCredit(Credit credit);`
+  * 前置条件 : 每个Credit都有唯一的CreditId
+  * 后置条件 : 添加信用变更记录
+* CreditMapper.getUserCredit
+  * 语法 : `List<Credit> getUserCredit(@Param("userId") Integer userId);`
+  * 前置条件 : 每个Credit都有唯一的CreditId
+  * 后置条件 : 获取用户的信用变更记录
+* CreditMapper.getAllCredit
+  * 语法 : `List<Credit> getAllCredit();`
+  * 前置条件 : 每个Credit都有唯一的CreditId
+  * 后置条件 : 获取所有的信用变更记录
+* CreditMapper.argueCredit
+  * 语法 : `int argueCredit(@Param("id") Integer id, @Param("argue") String argue);`
+  * 前置条件 : 每个Credit都有唯一的CreditId，被标记为异常订单
+  * 后置条件 : 对信用变更提出申诉
+* CreditMapper.handleArgue
+  * 语法 : `int handleArgue(@Param("id") Integer id, @Param("status") Integer statues);`
+  * 前置条件 : 每个Credit都有唯一的CreditId，订单已申诉
+  * 后置条件 : 处理信用申诉
+* CreditMapper.getArgueCredits
+  * 语法 : `List<Credit> getArgueCredits();`
+  * 前置条件 : 每个Credit都有唯一的CreditId
+  * 后置条件 : 获取所有申诉的信用记录
+
+##### LevelMapper
+
+* LevelMapper.formulateVIPLevel
+  * 语法 : `void formulateVIPLevel(@Param("level") Integer level, @Param("type") String type, @Param("requestConsumption") Integer requestConsumption, @Param("reduction") double reduction);`
+  * 前置条件 : VIP的等级是唯一的
+  * 后置条件 : 更新VIP信息
+* LevelMapper.changeLevel
+  * 语法 : `void changeLevel(@Param("level") Integer level, @Param("type") String type, @Param("requestConsumption") Integer requestConsumption, @Param("reduction") double reduction);`
+  * 前置条件 : VIP的等级是唯一的
+  * 后置条件 : 更新VIP类型等级
+* LevelMapper.getTheRequestOfLevel
+  * 语法 : `Integer getTheRequestOfLevel(@Param("level")Integer level, @Param("type")String type);`
+  * 前置条件 : VIP的等级是唯一的
+  * 后置条件 : 获取等级的要求消费额
+* LevelMapper.getTheReduOfLevel
+  * 语法 : `double getTheReduOfLevel(@Param("level")Integer level, @Param("type")String type);`
+  * 前置条件 : VIP的等级是唯一的
+  * 后置条件 : 获取等级的折扣度
+
+##### VIPMapper
+
+* VIPMapper.registerAsClientVIP
+  * 语法 : `void registerAsClientVIP(ClientVIP vip);`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
+  * 后置条件 : 注册成个人VIP
+* VIPMapper.freezeClientVIP
+  * 语法 : `void freezeClientVIP(@Param("userId") Integer userId);`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
+  * 后置条件 : 停用个人VIP
+* VIPMapper.restoreClientVIP
+  * 语法 : `void restoreClientVIP(@Param("userId") Integer userId);`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid，VIP被冻结
+  * 后置条件 : 恢复个人VIP的使用
+* VIPMapper.getVIPbyUserId
+  * 语法 : `ClientVIP getVIPbyUserId(@Param("userId") Integer userId);`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
+  * 后置条件 : 根据用户id获取VIP信息
+* VIPMapper.addVIPClientConsumption
+  * 语法 : `void addVIPClientConsumption(@Param("userId")Integer userId, @Param("amount") Integer amount);`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
+  * 后置条件 : 添加消费额
+* VIPMapper.clientLevelUp
+  * 语法 : `void clientLevelUp(@Param("userId")Integer userId, double reduction);`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
+  * 后置条件 : VIP等级提升
+* VIPMapper.registerAsCorpVIP
+  * 语法 : `void registerAsCorpVIP(CorpVIP corpVIP);`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
+  * 后置条件 : 注册成企业VIP
+* VIPMapper.freezeCorpVIP
+  * 语法 : `void freezeCorpVIP(@Param("corporationName") String corporationName);`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
+  * 后置条件 : 停用企业VIP
+* VIPMapper.restoreCorpVIP
+  * 语法 : `void restoreCorpVIP(@Param("corporationName") String corporationName);`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid，VIP已被冻结
+  * 后置条件 : 恢复企业VIP使用
+* VIPMapper.getVIPbyCorpName
+  * 语法 : `CorpVIP getVIPbyCorpName(@Param("corporationName")String corporationName);`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
+  * 后置条件 : 根据企业名获取VIP信息
+* VIPMapper.addVIPCorpConsumption
+  * 语法 : `void addVIPCorpConsumption(@Param("corporationName")String corporationName, @Param("amount") Integer amount);`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
+  * 后置条件 : 添加企业用户的消费额
+* VIPMapper.corpLevelUp
+  * 语法 : `void corpLevelUp(@Param("corporationName")String corporationName, double reduction);`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
+  * 后置条件 : 企业用户VIP等级提升
+* VIPMapper.getAllVIPClient
+  * 语法 : `List<ClientVIP> getAllVIPClient();`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
+  * 后置条件 : 获取所有的个人VIP
+* VIPMapper.getAllVIPCorp
+  * 语法 : `List<CorpVIP> getAllVIPCorp();`
+  * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
+  * 后置条件 : 获取所有的企业VIP
 
 ## 信息视角
 
@@ -882,11 +1269,18 @@
 
 系统的PO类就是对应的相关的实体类。
 
-* Coupon类包含优惠券的id, 描述，hotelId，优惠券类型，优惠券名称，优惠券使用门槛，折扣，优惠金额，可用时间，失效时间，优惠券状态。
-* Hotel类包含旅店的id，名称，地址，商圈，星级，好评率，描述，联系电话，管理员Id
-* HotelRoom类包含房间的id，类型，旅店ID，价格，剩余可预订房间数，该类型房间总数
-* Order类包含房间的ID，预订客户的ID，旅店的ID，入住日期，退房日期，房间类型，房间数量，人数，是否有儿童，ID创建时间，客户姓名，联系电话，订单状态
-* User类包含用户的ID，邮箱(用户名)，密码，姓名，电话号，信誉积分，用户类型
+* Answer类包含回答的id，用户id，用户名，问题id，回答内容
+* ClientVIP类包含VIP的id，用户id，等级，消费额度，状态，减免额度
+* Collection类包含收藏id，用户id，酒店id
+* Comment类包含用户id，订单id，满意度，环境，服务，设施，卫生得分和评语
+* CorpVIP类包含VIPid，企业名，VIP等级，消费额，折扣，VIP状态
+* Coupon类包含优惠券的id, 描述，hotelId，优惠券类型，优惠券名称，优惠券使用价格门槛，优惠券目标房间数量，折扣，优惠金额，可用时间，失效时间，优惠券状态，企业名，商圈，VIP等级
+* Credi类包含信誉id，用户id，修改日期，信誉变化量，现在的信誉值，变更原因
+* Hotel类包含旅店的id，名称，地址，商圈，星级，描述，联系电话，评价次数，评分，卫生，环境，服务，设施得分和图片url
+* HotelRoom类包含房间的id，类型，旅店ID，房间类型，价格，剩余可预订房间数，该类型房间总数，可入住人数，早餐类型
+* Order类包含房间的ID，预订客户的ID，旅店的ID，入住日期，退房日期，房间类型，房间数量，人数，是否有儿童，ID创建时间，客户姓名，联系电话，订单状态，订单评分，卫生、环境、服务、设施评分和评语
+* Question类包含问题id，用户ID，酒店ID，问题内容，用户名
+* User类包含用户的ID，邮箱(用户名)，密码，姓名，电话号，信誉积分，用户类型，生日，所属企业，可用的错误下单机会次数，头像，管理的企业ID，VIP类型
 
 例如持久化对象HotelRoom的定义如下：
 
@@ -894,25 +1288,91 @@
 public class HotelRoom {
     private Integer id;
     private RoomType roomType;
+    private BedType bedType;
+    private BreakFast breakfast;
     private Integer hotelId;
     private double price;
-    /** 当前剩余可预定房间数 */
     private int curNum;
-    /** 某类型房间总数 */
     private int total;
+    private Integer peopleNum;
+    public HotelRoom(){}
+    public HotelRoom(RoomVO room){
+        this.roomType = RoomType.valueOf(room.getRoomType());
+        this.bedType = BedType.valueOf(room.getBedType());
+        this.breakfast = BreakFast.valueOf(room.getBreakfast());
+        this.hotelId = room.getId();
+        this.price = room.getPrice();
+        this.curNum = room.getCurNum();
+        this.peopleNum = room.getPeopleNum();
+        this.total = room.getTotal();
+    }
+    public Integer getId() {
+        return id;
+    }
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
-    public RoomType getRoomType() { return roomType; }
-    public void setRoomType(RoomType roomType) { this.roomType = roomType; }
-    public Integer getHotelId() { return hotelId; }
-    public void setHotelId(Integer hotelId) { this.hotelId = hotelId; }
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
-    public int getCurNum() { return curNum; }
-    public void setCurNum(int curNum) { this.curNum = curNum; }
-    public int getTotal() { return total; }
-    public void setTotal(int total) { this.total = total; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
+
+    public BedType getBedType() {
+        return bedType;
+    }
+
+    public void setBedType(BedType bedType) {
+        this.bedType = bedType;
+    }
+
+    public BreakFast getBreakfast() {
+        return breakfast;
+    }
+
+    public void setBreakfast(BreakFast breakfast) {
+        this.breakfast = breakfast;
+    }
+
+    public Integer getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(Integer hotelId) {
+        this.hotelId = hotelId;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Integer getPeopleNum() { return peopleNum; }
+
+    public void setPeopleNum(Integer peopleNum) { this.peopleNum = peopleNum; }
+
+    public int getCurNum() {
+        return curNum;
+    }
+
+    public void setCurNum(int curNum) {
+        this.curNum = curNum;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 }
 ```
 
@@ -981,8 +1441,6 @@ public class HotelRoom {
 |    bizRegion     | varchar(255) |
 |    hotelStar     | varchar(255) |
 |     phoneNum     |   int(11)    |
-|       rate       |    double    |
-|    manager_id    |   int(11)    |
 |   commentTime    |   int(11)    |
 |    sanitation    |    double    |
 |   environment    |    double    |
