@@ -208,11 +208,11 @@
 
 | 服务名                                                                        | 服务                     |
 | ----------------------------------------------------------------------------- | ------------------------ |
-| hotelBLService.addHotel(HotelVO hotelVO)                                      | 添加酒店                 |
-| hotelBLService.updateRoomInfo(Integer hotelId, String roomType,Integer rooms) | 修改剩余客房信息         |
-| hotelBLService.retrieveHotels(Integer hotelId)                                | 获取所有酒店信息         |
-| hotelBLService.retrieveHotelDetails(Integer hotelId)                          | 获取某家酒店详细信息     |
-| hotelBLService.getRoomCurNum(Integer hotelId,String roomType)                 | 查看酒店某种房间剩余数量 |
+| `hotelBLService.addHotel(HotelVO hotelVO)`                                      | 添加酒店                 |
+| `hotelBLService.updateRoomInfo(Integer hotelId, String roomType,Integer rooms)` | 修改剩余客房信息         |
+| `hotelBLService.retrieveHotels(Integer hotelId)`                                | 获取所有酒店信息         |
+| `hotelBLService.retrieveHotelDetails(Integer hotelId)`                          | 获取某家酒店详细信息     |
+| `hotelBLService.getRoomCurNum(Integer hotelId,String roomType)`                 | 查看酒店某种房间剩余数量 |
 
 ##### couponView 模块的接口规范
 
@@ -220,9 +220,9 @@
 
 | 服务名                                                                       | 服务                                         |
 | ---------------------------------------------------------------------------- | -------------------------------------------- |
-| couponBLService.getMatchOrderCoupon(OrderVO orderVO)                         | 返回某一订单可用的优惠策略列表               |
-| couponBLService.getHotelAllCoupon(Integer hotelId)                           | 查看某个酒店提供的所有优惠策略（包括失效的） |
-| couponBLService.addHotelTargetMoneyCoupon(HotelTargetMoneyCouponVO couponVO) | 添加酒店满减优惠策略                         |
+| `couponBLService.getMatchOrderCoupon(OrderVO orderVO)`                         | 返回某一订单可用的优惠策略列表               |
+| `couponBLService.getHotelAllCoupon(Integer hotelId)`                           | 查看某个酒店提供的所有优惠策略（包括失效的） |
+| `couponBLService.addHotelTargetMoneyCoupon(HotelTargetMoneyCouponVO couponVO)` | 添加酒店满减优惠策略                         |
 
 ##### orderView 模块的接口规范
 
