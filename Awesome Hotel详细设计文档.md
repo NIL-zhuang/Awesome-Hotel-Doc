@@ -240,10 +240,6 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
   - 语法 : `public int getRoomCurNum(Integer hotelId, String roomType)`
   - 前置条件 : 获得Room数据库服务的引用
   - 后置条件 : 根据hotelId和roomType当前房间数量
-- HotelService.retrieveAvailableHotelDetails
-  - 语法 : `HotelVO retrieveAvailableHotelDetails(Integer hotelId, String beginTime, String endTime);`
-  - 前置条件 : 获得hotel和Order数据库的服务引用
-  - 后置条件 : 根据时间获得对应时间里的酒店房间数量
 - HotelService.addComment
   - 语法 : `void addComment(CommentVO commentVO, Integer hotelId);`
   - 前置条件 : 获得Comment数据库的服务和引用，用户已下单
@@ -276,10 +272,6 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
   - 语法 : `public int getRoomCurNum(Integer hotelId, String roomType)`
   - 前置条件 : 获得Room数据库服务的引用
   - 后置条件 : 根据hotelId和roomType获得Room的数量
-- RoomService.getRoomCurNumByTime
-  - 语法 : `Integer getRoomCurNumByTime(Integer hotelId, String beginTime, String endTime, String type);`
-  - 前置条件 : 获得Room和Order数据库服务的引用
-  - 后置条件 : 获得对应时间段内可用的房间数量
 - HotelSearchService.searchHotel
   - 语法 : `List<HotelVO> searchHotel(SearchBodyVO searchBody);`
   - 前置条件 : 用户已登录
@@ -290,8 +282,6 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 |            服务名             |             服务              |
 | :---------------------------: | :---------------------------: |
 | `AccountService.getUserInfo`  | 根据ManagerId返回UserPO的数据 |
-| `OrderService.getHotelOrders` |     获得对应酒店的OrderPO     |
-|  `OrderService.filterOrders`  |        筛选对应的Order        |
 
 - 业务逻辑层的动态模型
 
@@ -397,19 +387,32 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
   - 语法 : `public ResponseVO annulOrder(int orderid)`
   - 前置条件 : 获得Hotel，User，Order数据库的服务的引用
   - 后置条件 : 从Order数据库中删除OrderPO对象，更新User的信誉积分和酒店房间信息
+- OrderService.getOrderableRoom
+  - 语法 : `HotelVO getOrderableRoom(Integer hotelId, String beginTime, String endTime)`
+  - 前置条件 : 获得Hotel, Order数据库服务的引用
+  - 对特定的酒店，返回可预订的房间的信息
+- OrderService.checkRoomByOrder
+  - 语法 : `List<RoomVO> checkRoomByOrder(List<RoomVO> rooms, List<Order> orders)`
+  - 前置条件 : 获得Hotel, Order数据库服务的引用
+  - 后置条件 : 通过房间信息和对应的订单信息，检查酒店房间情况
+- OrderService.getRoomCurNumByOrder
+  - 语法 : `Integer getRoomCurNumByOrder(Integer hotelId, String beginTime, String endTime, String type)`
+  - 前置条件 : 获得Hotel, Order数据库服务的引用
+  - 后置条件 : 通过订单查找酒店特定房间的可用房间数，用于addOrder时的检验
 
 需要的服务（需接口）
 
-|              服务名               |              服务              |
-| :-------------------------------: | :----------------------------: |
-|   `HotelService.getRoomCurNum`    |   获取酒店房间已被预订的时间   |
-|   `AccountService.getUserInfo`    |   根据订单用户id获得用户信息   |
-|   `HotelService.updateRoomInfo`   |          更新房间信息          |
-| `RoomService.getRoomCurNumByTime` | 根据时间获取对应房间的可用数量 |
-|   `AccountService.getUserInfo`    |          获取用户信息          |
-|   `HotelService.updateRoomInfo`   |          更新房间信息          |
-|    `HotelService.annulComment`    |        修改Hotel的评分         |
-|     `HotelService.addComment`     |        修改Hotel的评分         |
+|                服务名                |              服务              |
+| :----------------------------------: | :----------------------------: |
+|     `HotelService.getRoomCurNum`     |   获取酒店房间已被预订的时间   |
+| `HotelService.retrieveHotelDetailis` |       获取酒店的详细信息       |
+|     `AccountService.getUserInfo`     |   根据订单用户id获得用户信息   |
+|    `HotelService.updateRoomInfo`     |          更新房间信息          |
+|  `RoomService.getRoomCurNumByTime`   | 根据时间获取对应房间的可用数量 |
+|     `AccountService.getUserInfo`     |          获取用户信息          |
+|    `HotelService.updateRoomInfo`     |          更新房间信息          |
+|     `HotelService.annulComment`      |        修改Hotel的评分         |
+|      `HotelService.addComment`       |        修改Hotel的评分         |
 
 - 业务逻辑层的动态模型
 
