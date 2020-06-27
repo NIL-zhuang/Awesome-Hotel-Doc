@@ -1,4 +1,4 @@
-# 软件体系结构文档模板
+软件体系结构文档模板
 
 ## 文档修改历史
 
@@ -10,38 +10,39 @@
 |            庄子元            | 2020.4.24 | 添加了架构涉及中业务逻辑层的模块职责和用户界面分解，完成逻辑视图 | 草稿v1.0 |
 |             韩禧             | 2020.4.25 | 完善了数据层                                                 | 草稿v1.0 |
 |            郭礼华            | 2020.5.xx | 更新了架构设计中的模块职责                                   |          |
+|            郭礼华            | 2020.5.xx | 更新了用户界面层分解                                         |          |
 
 ## 目录
 
 [TOC]
 
-## 引言
+## 1. 引言
 
-### 编制目的
+### 1.1 编制目的
 
 本报告详细完成对酒店预定系统的概要设计，达到指导详细设计和开发的目的，同时实现和测试人员及用户的沟通。
 
 本报告面向开发人员、测试人员及最终用户而编写，是了解系统的导航。
 
-### 词汇表
+### 1.2 词汇表
 
 |   词汇名称    | 词汇含义         | 备注 |
 | :-----------: | ---------------- | ---- |
 | Awesome Hotel | 奥森酒店预定系统 | -    |
 
-### 参考资料
+### 1.3 参考资料
 
 1. IEEE标准
 2. 酒店预定系统用例文档、软件需求规格说明文档
 3. 《软件工程与计算（卷二） 软件开发的技术基础》
 
-## 产品概述
+## 2. 产品概述
 
 ***Awesome Hotel*** 酒店房间预订系统是软件工程与计算Ⅱ开发小组制作的在线酒店房间预订系统，开发目的是为了帮助用户实现线上的酒店客房预订服务。功能包括用户个人基本信息管理、浏览酒店详细信息、预定酒店、查看订单等，以及酒店工作人员的基本信息管理、维护酒店基本信息、录入可用客房等管理功能，和系统管理员的注册酒店工作人员账号、更改管理员密码等功能。
 
 通过 ***Awesome Hotel*** 酒店房间预订系统，可以方便用户预定酒店客房，节约时间；为酒店减少线下售房，降低经营成本，从而吸引更多顾客，提高用户的满意度和酒店的盈利。
 
-## 逻辑视图
+## 3. 逻辑视图
 
 奥森酒店预订系统选择了分层体系结构风格，将系统分为3层（展示层、业务逻辑层、数据层）能够很好的示意整个高层抽象。展示层包含页面实现，业务逻辑层包含业务逻辑处理的实现，数据层负责数据的持久化和访问。分层体系结构的逻辑视角和逻辑设计方案如下。
 
@@ -49,9 +50,9 @@
 
 ![logic_design](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/logic_view.png)
 
-## 组合视图
+## 3. 组合视图
 
-### 开发包图
+### 3.1 开发包图
 
 * 表示软件组件在开发时环境中的静态组织
   * 描述开发包以及相互间的依赖
@@ -98,7 +99,7 @@
 
 ![serverpkg](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/severpkg.png)
 
-### 运行时进程
+### 3.2 运行时进程
 
 ***Awesome Hotel*** 中会有多个客户端（浏览器）进程和一个服务器端进程。结合部署图，客户端进程在客户端机器上运行，服务器端进程在服务器端机器上运行。进程图如下所示。
 
@@ -106,25 +107,25 @@
 
 ![runtime_process](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/se_runtime_process.png)
 
-### 物理部署
+### 3.3 物理部署
 
 ***Awesome Hotel*** 中，客户端构件是放在客户端机器上的，服务器端构件是放在服务器端机器上的。在客户端节点上，只需要安装现代浏览器（即支持HTML、XHTML、CSS、ECMAScript及W3C DOM标准的浏览器）即可。具体部署图如下图所示。
 
 ![deploy](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/se_physical_deploy.png)
 
-## 架构设计
+## 4. 架构设计
 
-### 模块职责
+### 4.1 模块职责
 
 由于Web应用的特殊性，奥森酒店预定系统 ***Awesome Hotel*** 的客户端不需要进行开发，只需用户自行安装浏览器即可，故略过。服务器端模块视图如下所示。
 
-#### 模块视图
+#### 4.1.1 模块视图
 
 ![](https://colarhua-pic.oss-cn-shenzhen.aliyuncs.com/software-engineering/service_module.png)
 
 
 
-#### 各层职责
+#### 4.1.2 各层职责
 
 |       层       | 职责                                                         |
 | :------------: | ------------------------------------------------------------ |
@@ -138,7 +139,7 @@
 
    每一层只是使用下方直接接触的层，层与层之间仅仅是通过接口的调用来完成的，层之间调用的接口如下所示。
 
-#### 层之间调用接口
+#### 4.1.3 层之间调用接口
 
 |                             接口                             | 服务调用方         | 服务提供方         |
 | :----------------------------------------------------------: | ------------------ | ------------------ |
@@ -150,99 +151,147 @@
 
 ![interface](https://colarhua-pic.oss-cn-shenzhen.aliyuncs.com/software-engineering/Class Diagram.png)
 
-### 用户界面层分解
+### 4.2 用户界面层分解
 
-根据需求，系统存在14个用户界面：登录界面、注册界面、酒店浏览界面、酒店信息界面、预定酒店界面、酒店详情界面、用户个人信息界面、用户订单界面、酒店管理界面、添加酒店界面、录入房间界面、查看优惠策略界面、添加优惠策略界面、工作人员订单管理界界面。界面跳转如图所示。
+根据需求，系统存在41个用户界面：登录界面、注册界面、帮助界面、营销情况界面、酒店浏览界面、酒店信息界面、酒店搜索界面、酒店房间信息界面、酒店预订界面、酒店详情界面、酒店点评界面、酒店提问界面、酒店优惠界面、酒店历史订单界面、用户个人中心界面、用户个人信息界面、用户个人订单界面、用户收藏酒店界面、用户信用记录界面、会员中心界面、酒店管理界面、酒店基本信息管理界面、酒店订单管理界面、酒店优惠管理界面、酒店客房管理界面、网站营销管理界面、订单管理界面、所有订单界面、今日未执行订单界面、异常订单界面、优惠策略管理界面、用户管理界面、信誉充值界面、用户会员管理界面、企业会员管理界面、用户等级管理界面、网站管理界面、账户管理界面酒店工作人员管理界面、网站营销人员管理界面、所有酒店管理界面，界面跳转如图所示。
 
-![jump](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/se_user_interface_jump.jpg)
+![page_jump](https://colarhua-pic.oss-cn-shenzhen.aliyuncs.com/software-engineering/page_jump.png)
 
 用户界面类如图所示。
 
-![interface component](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/se_user_interface_component_class.jpg)
+![interface component](https://colarhua-pic.oss-cn-shenzhen.aliyuncs.com/software-engineering/page_class.png)
 
-#### 展示层模块的职责
+#### 4.2.1 页面层模块的职责
 
-| 模块             | 职责                                                                       |
-| ---------------- | -------------------------------------------------------------------------- |
-| mainView         | 主界面，负责界面的显示和界面的跳转                                         |
-| adminView        | 管理员界面，负责允许管理员进行酒店工作人员的管理                           |
-| hotelmanagerView | 酒店管理员界面，负责允许酒店工作人员进行酒店信息的更改，以及酒店订单的处理 |
-| userView         | 用户界面，负责允许用户管理自己的账户信息，允许用户对酒店的预定             |
-| hotelView        | 酒店展示界面，负责酒店信息的显示                                           |
-| couponView       | 优惠券界面，负责允许用户查看优惠券以及酒店工作人员进行优惠券的添加         |
-| orderView        | 订单界面，负责允许用户查看自己的订单以及对自己订单的更改                   |
+| 模块             | 职责                                                         |
+| ---------------- | ------------------------------------------------------------ |
+| mainView         | 主界面，负责界面的显示和界面的跳转                           |
+| adminView        | 管理员界面，负责允许管理员进行酒店的添加以及允许管理员管理酒店工作人员和网站营销人员 |
+| hotelManagerView | 酒店管理员界面，负责允许酒店工作人员查看自己酒店的营销情况，允许酒店工作人员进行酒店信息、客房信息的更改以及酒店订单的处理 |
+| userView         | 用户界面，负责允许用户管理自己的账户信息，允许用户预定酒店，允许用户查看自己的信用记录以及允许用户注册网站会员与企业会员 |
+| salesPersonView  | 网站营销人员界面，负责允许网站营销人员查看网站的营销情况，允许网站营销人员处理异常订单，允许网站营销人员制定网站优惠策略，允许网站营销人员进行用户信誉充值，允许网站营销人员进行用户会员和企业会员的管理以及会员等级的制定及管理 |
+| hotelView        | 酒店展示界面，负责酒店信息的显示，负责酒店搜索界面的展示，以及负责酒店评论和提问的展示 |
+| couponView       | 优惠券界面，负责允许用户查看优惠券以及酒店工作人员进行优惠券的添加 |
+| orderView        | 订单界面，负责允许用户查看订单的详情，允许用户添加订单，以及管理员进行订单状态的修改 |
 
-#### 展示层模块的接口规范
+#### 4.2.2 页面层模块的接口规范
 
-##### adminView 模块的接口规范
-
-需要的服务（需接口）
-
-| 服务名                                       | 服务                     |
-| :------------------------------------------- | ------------------------ |
-| AdminBLService.addManager(UserForm userForm) | 添加酒店管理人员账号     |
-| AdminBLService.getAllManagers()              | 获得所有酒店管理人员信息 |
-
-##### hotelmanagerView 模块的接口规范
+##### 4.2.2.1 adminView 模块的接口规范
 
 需要的服务（需接口）
 
-| HotelManagerBLService.modifyRoomInfo(Integer hotelId)  | 修改酒店的客房信息 |
-| ------------------------------------------------------ | ------------------ |
-| HotelManagerBLService.modifyHotelInfo(Integer hotelId) | 修改酒店的基本信息 |
+| 服务名                                         | 服务                                   |
+| :--------------------------------------------- | -------------------------------------- |
+| AdminService.addManager(UserForm userForm)     | 添加酒店管理人员账号                   |
+| AdminService.addSalesPerson(UserForm userForm) | 添加网站营销人员账号                   |
+| AdminService.getAllManagers()                  | 获得所有酒店管理人员信息               |
+| AdminService.getAllSalesPerson()               | 获得所有网站营销人员信息               |
+| AdminService.deleteManager(Integer id)         | 根据酒店管理人员id删除某个酒店管理人员 |
+| AdminService.deleteSalesPerson(Integer id)     | 根据网站营销人员id删除某个酒店管理人员 |
 
-##### userView 模块的接口规范
-
-需要的服务（需接口）
-
-| 服务名                                                                                   | 服务                                            |
-| ---------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| UserBLService.registerAccount(UserVO userVO)                                             | 注册账号                                        |
-| UserBLService.login(UserForm userForm)                                                   | 用户登陆，登录成功会将用户信息保存再session中   |
-| UserBLService.getUserInfo(int id)                                                        | 获取用户个人信息                                |
-| UserBLService.updateUserInfo(int id, String password,String username,String phonenumber) | 更新用户的个人信息，包括密码， 账户名和手机号码 |
-
-##### hotelView 模块的接口规范
+##### 4.2.2.2 hotelmanagerView 模块的接口规范
 
 需要的服务（需接口）
 
-| 服务名                                                                        | 服务                     |
-| ----------------------------------------------------------------------------- | ------------------------ |
-| hotelBLService.addHotel(HotelVO hotelVO)                                      | 添加酒店                 |
-| hotelBLService.updateRoomInfo(Integer hotelId, String roomType,Integer rooms) | 修改剩余客房信息         |
-| hotelBLService.retrieveHotels(Integer hotelId)                                | 获取所有酒店信息         |
-| hotelBLService.retrieveHotelDetails(Integer hotelId)                          | 获取某家酒店详细信息     |
-| hotelBLService.getRoomCurNum(Integer hotelId,String roomType)                 | 查看酒店某种房间剩余数量 |
+| 服务名                                                       | 服务                   |
+| ------------------------------------------------------------ | ---------------------- |
+| HotelService.updateHotelInfo(Integer hotelId, HotelForm hotelForm) | 修改酒店的基本信息     |
+| RoomService.addRoomInfo(RoomVO hotelRoom)                    | 添加酒店客房           |
+| RoomService.deleteRoom(Integer hotelId, String roomType)     | 删除酒店某种类型的房间 |
 
-##### couponView 模块的接口规范
+##### 4.2.2.3 salesPersonView模块的接口规范
 
 需要的服务（需接口）
 
-| 服务名                                                                       | 服务                                         |
-| ---------------------------------------------------------------------------- | -------------------------------------------- |
-| couponBLService.getMatchOrderCoupon(OrderVO orderVO)                         | 返回某一订单可用的优惠策略列表               |
-| couponBLService.getHotelAllCoupon(Integer hotelId)                           | 查看某个酒店提供的所有优惠策略（包括失效的） |
-| couponBLService.addHotelTargetMoneyCoupon(HotelTargetMoneyCouponVO couponVO) | 添加酒店满减优惠策略                         |
+| 服务名                                                       | 服务                                             |
+| ------------------------------------------------------------ | ------------------------------------------------ |
+| CouponService.getWebsiteCoupon()                             | 获取所有网站优惠券                               |
+| CouponService.addTimeCouponVO(TimeCouponVO couponVO)         | 网站营销人员制定节日优惠优惠券                   |
+| CouponService.addBizRegionCouponVO(BizRegionCouponVO couponVO) | 网站营销人员制定商圈优惠优惠券                   |
+| CouponService.addCorporateCouponVO(CorporateCouponVO couponVO) | 网站营销人员制定企业优惠优惠券                   |
+| AccountService.getUserInfoByEmail(String email)              | 网站营销人员根用户邮箱获取用户的个人信息         |
+| AccountService.chargeCredit(Integer id, Integer change, String reason) | 网站营销人员为用户充值信誉积分                   |
+| VIPService.freezeClientVIP(Integer userId)                   | 根据userId冻结用户网站会员                       |
+| VIPService.restoreClientVIP(Integer userId)                  | 根据userId恢复网站会员                           |
+| VIPService.freezeCorpVIP(String corporationName)             | 根据企业名字冻结企业会员                         |
+| VIPService.restoreCorpVIP(String corporationName)            | 根据企业名字恢复企业会员                         |
+| VIPService.getAllVIPClient()                                 | 获取所有网站会员                                 |
+| VIPService.getAllVIPCorp()                                   | 获取所有企业会员                                 |
+| LevelService.formulateVIPLevel(Integer level, String type, Integer requestConsumption, double reduction) | 制定某个会员等级所需要的消费额以及享受的折扣额度 |
+| LevelService.getTheRequestOfLevel(Integer level, String type) | 获取达到某个等级会员所需要的消费额               |
 
-##### orderView 模块的接口规范
+##### 4.2.2.4 userView 模块的接口规范
 
 需要的服务（需接口）
 
-| 服务名                                         | 服务                       |
-| ---------------------------------------------- | -------------------------- |
-| orderBLService.addOrder(OrderVO orderVO)       | 预定酒店时添加订单         |
-| orderBLService.getAllOrders()                  | 获得所有订单信息           |
-| orderBLService.getHotelOrders(Integer hotelId) | 查看指定酒店的所有订单     |
-| orderBLService.getUserOrders(int userid)       | 获得指定用户的所有订单信息 |
-| orderBLService.annulOrder(int orderid)         | 撤销订单                   |
+| 服务名                                                       | 服务                                            |
+| ------------------------------------------------------------ | ----------------------------------------------- |
+| AccountService.registerAccount(UserVO userVO)                | 注册账号                                        |
+| AccountService.login(UserForm userForm)                      | 用户登陆，登录成功会将用户信息保存在session中   |
+| AccountService.getUserInfo(int id)                           | 获取用户个人信息                                |
+| AccountService.updateUserInfo(int id, String password,String username,String phonenumber) | 更新用户的个人信息，包括密码， 账户名和手机号码 |
+| AccountService.updatePassword(int  id, String password)      | 更新用户的账号密码                              |
+| AccountService.updateBirthday(int id, String birthday)       | 更新用户的生日                                  |
+| VIPService.registerAsClientVIP(Integer userId, String Birthday); | 注册网站会员                                    |
+| VIPService.registerAsCorpVIP(String corporationName);        | 注册企业会员                                    |
 
-### 业务逻辑层分解
+##### 4.2.2.5 hotelView 模块的接口规范
+
+需要的服务（需接口）
+
+| 服务名                                                       | 服务                           |
+| ------------------------------------------------------------ | ------------------------------ |
+| hotelService.retrieveHotels()                                | 获取所有酒店信息               |
+| hotelService.retrieveHotelDetails(Integer hotelId)           | 获取某家酒店详细信息           |
+| hotelService.getRoomCurNum(Integer hotelId,String roomType)  | 查看酒店某种房间剩余数量       |
+| hotelService.addComment(CommentVO commentVO, Integer hotelId) | 为某家酒店添加评论             |
+| hotelService.annulComment(CommentVO commentVO, Integer hotelId) | 撤销为某家酒店的评论           |
+| hotelSearchService.searchHotel(SearchBodyVO searchBody)      | 根据searchBody中的条件搜索酒店 |
+| CollectionService.addCollection(CollectionVO collectionVO)   | 添加收藏的酒店                 |
+| CollectionService.annulCollection(Integer collectionId)      | 取消收藏的酒店                 |
+| CollectionService.getHotelCollection(Integer hotelId)        | 获取酒店被收藏的数量           |
+| QuestionService.addQuestion(QuestionForm questionForm)       | 对酒店提问                     |
+| QuestionService.annulQuestion(Integer questionId)            | 撤销某个对酒店的评论           |
+| QuestionService.getHotelQuestion(Integer hotelId)            | 获取酒店所有提问               |
+| AnswerService.addAnswer(AnswerVO answerVO)                   | 对酒店的问题进行回复           |
+| AnswerService.getQuestionAnswers(Integer questionId)         | 获取某个问题的所有回复         |
+| AnswerService.annulAnswer(Integer answerId)                  | 撤销某条回复                   |
+
+##### 4.2.2.6 couponView 模块的接口规范
+
+需要的服务（需接口）
+
+| 服务名                                                       | 服务                                         |
+| ------------------------------------------------------------ | -------------------------------------------- |
+| CouponService.getMatchOrderCoupon(OrderVO orderVO)           | 返回某一订单可用的优惠策略列表               |
+| CouponService.getHotelAllCoupon(Integer hotelId)             | 查看某个酒店提供的所有优惠策略（包括失效的） |
+| CouponService.addHotelTargetMoneyCoupon(HotelTargetMoneyCouponVO couponVO) | 添加酒店满减优惠策略                         |
+| CouponService.addManyRoomCoupon(ManyRoomCouponVO couponVO)   | 添加酒店多间优惠策略                         |
+| CouponService.addTimeCouponVO(TimeCouponVO couponVO)         | 添加酒店限时优惠策略                         |
+| CouponService.addBirthdayCouponVO(BirthdayCouponVO couponVO) | 添加酒店生日优惠策略                         |
+| CouponService.annulCoupon(Integer couponId)                  | 根据couponId取消某种优惠券                   |
+
+##### 4.2.2.7 orderView 模块的接口规范
+
+需要的服务（需接口）
+
+| 服务名                                       | 服务                       |
+| -------------------------------------------- | -------------------------- |
+| orderService.addOrder(OrderVO orderVO)       | 预定酒店时添加订单         |
+| orderService.getAllOrders()                  | 获得所有订单信息           |
+| orderService.getHotelOrders(Integer hotelId) | 查看指定酒店的所有订单     |
+| orderService.getUserOrders(int userid)       | 获得指定用户的所有订单信息 |
+| orderService.annulOrder(int orderid)         | 撤销订单                   |
+| orderService.checkIn(int orderId)            | 订单执行入住               |
+| orderService.finishOrder(int orderId)        | 订单执行完毕               |
+
+### 4.3 业务逻辑层分解
 
 业务逻辑层包含多个针对界面的业务逻辑处理对象。例如Admin对象负责处理酒店管理员界面的业务逻辑；Orders对象负责订单界面的业务逻辑。
 
 ![logic_layer](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/se_logic_layer.png)
 
-#### 业务逻辑层模块的职责
+#### 4.3.1 业务逻辑层模块的职责
 
 |    模块    | 职责                                     |
 | :--------: | :--------------------------------------- |
@@ -254,9 +303,9 @@
 | questionbl | 负责用户的提问和回答逻辑                 |
 |   VIPbl    | 负责VIP用户、企业用户的特权服务          |
 
-#### 业务逻辑层的模块接口规范
+#### 4.3.2 业务逻辑层的模块接口规范
 
-##### AdminBl模块的接口规范
+##### 4.3.2.1 AdminBl模块的接口规范
 
 提供的服务（供接口）
 
@@ -296,7 +345,7 @@
 |   `AdminMapper.deleteManager()`   | 删除酒店工作人员                |
 | `AdminMapper.deleteSalesPerson()` | 删除网站营销人员                |
 
-##### CouponBl模块的接口规范
+##### 4.3.2.2 CouponBl模块的接口规范
 
 提供的服务（供接口）
 
@@ -352,7 +401,7 @@
 |     `CouponMapper.getWebCoupon`     | 获取网站Coupon                        |
 |     `CouponMapper.getBizRegion`     | 获取对应商圈的优惠券                  |
 
-##### HotelBl模块的接口规范
+##### 4.3.2.3 HotelBl模块的接口规范
 
 提供的服务（供接口）
 
@@ -450,7 +499,7 @@
 |     `RoomMapper.updateRoomInfo`      |          更新客房信息          |
 |      `RoomMapper.getRoomCurNum`      |    获取客房当前可用房间数量    |
 
-##### OrderBl模块的接口规范
+##### 4.3.2.4 OrderBl模块的接口规范
 
 提供的服务（供接口）
 
@@ -552,7 +601,7 @@
 |    `HotelService.annulComment`    |              修改Hotel的评分               |
 |     `HotelService.addComment`     |              修改Hotel的评分               |
 
-##### UserBl模块的接口规范
+##### 4.3.2.5 UserBl模块的接口规范
 
 提供的服务（供接口）
 
@@ -682,7 +731,7 @@
 |  `CollectionMapper.getUseCollection`  |               获取用户的收藏               |
 | `CollectionMapper.getHotelCollection` |             获取酒店的所有收藏             |
 
-##### QuestionBl模块的接口规范
+##### 4.3.2.6 QuestionBl模块的接口规范
 
 提供的服务（供接口）
 
@@ -732,7 +781,7 @@
 | `QuestionMapper.getHotelQuestion` |   获取酒店的问题   |
 | `QuestionMapper.getUserQuestion`  |   获取用户的问题   |
 
-##### VIPBl模块的接口规范
+##### 4.3.2.7 VIPBl模块的接口规范
 
 提供的服务（供接口）
 
@@ -824,13 +873,13 @@
 |     `VIPMapper.getAllVIPClient`     |    获取所有的个人VIP     |
 |      `VIPMapper.getAllVIPCorp`      |    获取所有的企业VIP     |
 
-### 数据层分解
+### 4.4 数据层分解
 
 数据层主要给业务逻辑层提供数据访问服务，包括对持久化数据的增、删、改、查。例如Admin业务逻辑需要的服务由AdminMapper接口提供。本酒店房间预订系统主要以数据库形式存储。数据层模块的描述具体如下图：
 
 ![data_layer](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/se_data_layer.png)
 
-#### 数据层模块的职责
+#### 4.4.1 数据层模块的职责
 
 数据层模块的职责如下表所示：
 
@@ -861,11 +910,11 @@
 | `VIPMapper`                 | VIP数据库的数据层接口                   |
 | `VIPMapperMySqlImpl`        | VIP数据库的持久化数据库接口             |
 
-#### 数据层模块的接口规范
+#### 4.4.2 数据层模块的接口规范
 
 数据层模块的接口规范如下表所示：
 
-##### AdminMapper
+##### 4.4.2.1 AdminMapper
 
 提供的服务（供接口）
 
@@ -898,7 +947,7 @@
   * 前置条件 : 每一个历史用户的ID存在且唯一
   * 后置条件 : 删除网站营销人员
 
-##### CollectionMapper
+##### 4.4.2.2 CollectionMapper
 
 * CollectionMapper.addCollection
   * 语法 : `int addCollection(Collection collection);`
@@ -917,7 +966,7 @@
   * 前置条件 : 每个Collection中userId和HotelId是超键
   * 后置条件 : 获得所有酒店的收藏
 
-##### CouponMapper
+##### 4.4.2.3 CouponMapper
 
 * CouponMapper.insertCoupon
   * 语法 : `int insertCoupon(Coupon coupon);`
@@ -940,7 +989,7 @@
   * 前置条件 : 每个Coupon的Id都唯一
   * 后置条件 : 获取对应商圈的coupon
 
-##### HotelMapper
+##### 4.4.2.4 HotelMapper
 
 * HotelMapper.insertHotel
   * 语法 : `int insertHotel(Hotel hotel);`
@@ -979,7 +1028,7 @@
   * 前置条件 : 每个Hotel的hotelId都是不同的
   * 后置条件 : 更新酒店评论及评分
 
-##### RoomMapper
+##### 4.4.2.5 RoomMapper
 
 * RoomMapper.updateRoomInfo
   * 语法 : `int updateRoomInfo(@Param("hotelId") Integer hotelId,@Param("roomType") String roomType,@Param("minNum") Integer minNum);`
@@ -1006,7 +1055,7 @@
   * 前置条件 : Room表的hotelId和roomType都构成超键
   * 后置条件 : 删除酒店房间
 
-##### OrderMapper
+##### 4.4.2.6 OrderMapper
 
 * OrderMapper.addOrder
   * 语法 : `void addOrder(Order order);`
@@ -1065,7 +1114,7 @@
   * 前置条件 : 每一行OrderId是唯一的
   * 后置条件 : 撤销评价
 
-##### AnswerMapper
+##### 4.4.2.7 AnswerMapper
 
 * AnswerMapper.addAnswer
   * 语法 : `int addAnswer(Answer answer);`
@@ -1084,7 +1133,7 @@
   * 前置条件 : AnswerId在数据库中是唯一的
   * 后置条件 : 撤销答案
 
-##### QuestionMapper
+##### 4.4.2.8 QuestionMapper
 
 * QuestionMapper.addQuestion
   * 语法 : `int addQuestion(Question question);`
@@ -1103,7 +1152,7 @@
   * 前置条件 : QuestionId在数据库是唯一的
   * 后置条件 : 获取用户提出的所有问题
 
-##### AccountMapper
+##### 4.4.2.9 AccountMapper
 
 * AccountMapper.createNewAccount
   * 语法 : `void createNewAccount(User user);`
@@ -1158,7 +1207,7 @@
   * 前置条件 : User的邮箱和UserId是唯一的
   * 后置条件 : 获取所有User
 
-##### CreditMapper
+##### 4.4.2.10 CreditMapper
 
 * CreditMapper.getCredit
   * 语法 : `Credit getCredit(@Param("id") Integer id);`
@@ -1189,7 +1238,7 @@
   * 前置条件 : 每个Credit都有唯一的CreditId
   * 后置条件 : 获取所有申诉的信用记录
 
-##### LevelMapper
+##### 4.4.2.11 LevelMapper
 
 * LevelMapper.formulateVIPLevel
   * 语法 : `void formulateVIPLevel(@Param("level") Integer level, @Param("type") String type, @Param("requestConsumption") Integer requestConsumption, @Param("reduction") double reduction);`
@@ -1208,7 +1257,7 @@
   * 前置条件 : VIP的等级是唯一的
   * 后置条件 : 获取等级的折扣度
 
-##### VIPMapper
+##### 4.4.2.12 VIPMapper
 
 * VIPMapper.registerAsClientVIP
   * 语法 : `void registerAsClientVIP(ClientVIP vip);`
@@ -1267,9 +1316,9 @@
   * 前置条件 : 每个用户、企业都只有唯一的VIP行和VIPid
   * 后置条件 : 获取所有的企业VIP
 
-## 信息视角
+## 5. 信息视角
 
-### 数据持久化对象
+### 5.1 数据持久化对象
 
 系统的PO类就是对应的相关的实体类。
 
@@ -1380,11 +1429,11 @@ public class HotelRoom {
 }
 ```
 
-### 数据库表
+### 5.2 数据库表
 
 数据库中包含Answer表，Collections表，Coupon表，Credits表，Hotel表，Orderlist表，Questions表，Room表，User表，VIP表，VIPLevel表
 
-#### Answers表
+#### 5.2.1 Answers表
 
 |    属性    |     类型     |
 | :--------: | :----------: |
@@ -1393,7 +1442,7 @@ public class HotelRoom {
 | questionId |   int(11)    |
 |   answer   | varchar(255) |
 
-#### Collections表
+#### 5.2.2 Collections表
 
 |  属性   |  类型   |
 | :-----: | :-----: |
@@ -1401,7 +1450,7 @@ public class HotelRoom {
 | userID  | int(11) |
 | hotelID | int(11) |
 
-#### coupon表
+#### 5.2.3 coupon表
 
 |      属性       |     类型     |
 | :-------------: | :----------: |
@@ -1421,7 +1470,7 @@ public class HotelRoom {
 |    bizRegion    | varchar(255) |
 |    vipLevel     |   int(11)    |
 
-#### Credits表
+#### 5.2.4 Credits表
 
 |    属性    |     类型     |
 | :--------: | :----------: |
@@ -1434,7 +1483,7 @@ public class HotelRoom {
 |   status   |    int(5)    |
 |   argue    | varchar(255) |
 
-#### hotel表
+#### 5.2.5 hotel表
 
 |       属性       |     类型     |
 | :--------------: | :----------: |
@@ -1452,7 +1501,7 @@ public class HotelRoom {
 |    equipment     |    double    |
 |     picture      | varchar(255) |
 
-#### orderList表
+#### 5.2.6 orderList表
 
 |     属性     |     类型     |
 | :----------: | :----------: |
@@ -1478,7 +1527,7 @@ public class HotelRoom {
 |   service    |    int(5)    |
 |  equipment   |    int(5)    |
 
-#### Question表
+#### 5.2.7 Question表
 
 |   属性    |     类型     |
 | :-------: | :----------: |
@@ -1489,7 +1538,7 @@ public class HotelRoom {
 | question  | varchar(255) |
 | available |  tinyint(1)  |
 
-#### room表
+#### 5.2.8 room表
 
 |   属性    |    类型     |
 | :-------: | :---------: |
@@ -1503,7 +1552,7 @@ public class HotelRoom {
 | breakfast | varchar(50) |
 | peopleNum |   int(11)   |
 
-#### user表
+#### 5.2.9 user表
 
 |    属性     |     类型     |
 | :---------: | :----------: |
@@ -1522,7 +1571,7 @@ public class HotelRoom {
 |  portrait   | varchar(255) |
 |   vipType   | varchar(255) |
 
-#### VIP表
+#### 5.2.10 VIP表
 
 |    属性     |     类型     |
 | :---------: | :----------: |
@@ -1533,7 +1582,7 @@ public class HotelRoom {
 |   status    |   int(11)    |
 |  reduction  |    double    |
 
-#### VIPLevel表
+#### 5.2.11 VIPLevel表
 
 |        属性        |     类型     |
 | :----------------: | :----------: |
