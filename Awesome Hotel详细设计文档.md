@@ -55,6 +55,8 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 - 设计图
 
+![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/adminbl.png)
+
 - 类的职责
 
 |       模块       |                  职责                  |
@@ -94,9 +96,27 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 - 业务逻辑层的动态模型
 
+    管理HotelManger相关方法和管理SalesPerson的差不多，这里省略后者。
+
+    - addManager顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/addManager.png)
+
+    - getAllManager顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/getAllManagers.png)
+
+    - deleteHotelManager顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/deleteHotelManger.png)
+
+    - Admin状态图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/admin.png)
+
 - 业务逻辑层的设计原理
 
-利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
+    利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
 
 #### 4.1.2 Couponbl模块
 
@@ -111,6 +131,8 @@ adminbl主要功能是管理酒店工作人员和网站营销人员账户。
 UserForm是前端传回的用户信息对象，由AdminController调用业务逻辑层方法，将UserForm转化为User，User对象被设计为持久化对象，存储在数据库中。
 
 - 设计图
+
+![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/couponbl.png)
 
 - 类的职责
 
@@ -184,9 +206,25 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 - 业务逻辑层的动态模型
 
+    - addCoupon顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/addCoupon.png)
+
+    - annulCoupon顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/annulCoupon.png)
+
+    - getOrderMatchCoupon顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/getOrderMatchCoupons.png)
+
+    - Coupon状态图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/coupon.png)
+
 - 业务逻辑层的设计原理
 
-利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
+    利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
 
 #### 4.1.3 hotelbl模块
 
@@ -201,6 +239,8 @@ adminbl主要功能是管理酒店工作人员和网站营销人员账户。
 UserForm是前端传回的用户信息对象，由AdminController调用业务逻辑层方法，将UserForm转化为User，User对象被设计为持久化对象，存储在数据库中。
 
 - 设计图
+
+![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/hotelbl.png)
 
 - 类的职责
 
@@ -287,9 +327,35 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 - 业务逻辑层的动态模型
 
+    这里并不包含上述全部接口，挑了几个主要的。
+
+    - createHotel顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/createHotel.png)
+
+    - updateHotelInfo顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/updateHotelInfo.png)
+
+    - deleteHotel顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/deleteHotel.png)
+
+    - addRoomInfo顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/addRoomInfo.png)
+
+    - retrieveHotelDetail顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/retrieveHotelDetail.png)
+
+    - Hotel状态图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/Hotel.png)
+
 - 业务逻辑层的设计原理
 
-利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
+    利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
 
 #### 4.1.4 orderbl模块
 
@@ -305,7 +371,7 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 - 设计图
 
-
+![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/orderbl.png)
 
 - 类的职责
 
@@ -420,9 +486,39 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 - 业务逻辑层的动态模型
 
+    同样，这里并不包含上述全部接口，挑了几个主要的。
+
+    - addOrder顺序图
+    
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/reverseHotel.png)
+
+    - annulOrder顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/annulOrder.png)
+
+    - getUserOrders顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/retrieveUserOrders.png)
+
+    - addComment顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/addComment.png)
+
+    - getComment顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/getComment.png)
+
+    - getOrderableRoom顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/getOrderableRoom.png)
+
+    - Order状态图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/order.png)
+
 - 业务逻辑层的设计原理
 
-利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
+    利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
 
 #### 4.1.5 questionbl模块
 
@@ -489,32 +585,40 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 - 业务逻辑层的动态模型
 
     - addQuestion顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/addQuestion.png)
 
     - addAnswer顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/addAnswer.png)
 
     - annulQuestion顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/annulQuestion.png)
 
     - annulAnswer顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/annulAnswer.png)
 
     - getAnswersOfQuestion顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/getQuestionAnswer.png)
 
     - getHotelQuestion顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/getHotelQuestion.png)
 
     - Question状态图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/Question状态图.png)
 
     - Answer状态图
 
-    在这里，Answer对象从属与Question对象，其状态也和Question类似，因此省略状态图
+    在这里，Answer对象从属与Question对象，其状态也和Question类似，因此省略其状态图
+
 - 业务逻辑层的设计原理
 
-利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
+    利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
 
 #### 4.1.6 userbl模块
 
@@ -645,35 +749,48 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 - 业务逻辑层的动态模型
 
     - login顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/login.png)
 
     - registerAccount顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/registerAccount.png)
 
     - getUserInfo顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/getUserInfo.png)
 
     - updateUserInfo顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/updateUserInfo.png)
 
     - chargeCredit顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/chargeCredit.png)
 
     - addCollection顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/addCollection.png)
 
     - annulCollection顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/annulCollection.png)
 
     - getUserCollection顺序图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/getUserCollection.png)
 
+    - getUserCreditChange顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/getUserCreditChange.png)
+
     - User对象状态图
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/user状态图.png)
 
 - 业务逻辑层的设计原理
 
-利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
+    利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
 
 #### 4.1.7 VIPbl模块
 
@@ -773,12 +890,46 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 - 业务逻辑层的动态模型
 
+    企业会员相关方法的顺序图与普通会员没有太大不同，所以这里只给出普通会员的相关图例，省略企业会员。
+
+    - registerClientVIP顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/registerClientVIP.png)
+
+    - freezeClientVIP顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/freezeClientVIP.png)
+
+    - restoreClientVIP顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/restoreClientVIP.png)
+
+    - getUserVIP顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/getUserVIP.png)
+
+    - addVIPConsumption顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/addVIPConsumption.png)
+
+    - formulateALevel顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/formulateALevel.png)
+
+    - getTheRequestOfLevel顺序图
+
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/getTheRequestOfLevel.png)
+
+    - VIP状态图
+    
+    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/VIP.png)
+
 - 业务逻辑层的设计原理
 
-利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
+    利用委托式控制风格，每个界面需要访问的业务逻辑由各自的BLServiceImpl委托给不同的领域对象。
 
 ## 5. 依赖视角
 
 我们的产品是web app，因此开发重点是服务端，服务端各自包的依赖关系如下
 
-![开发包图](null)
+![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/服务端开发包图.png)
