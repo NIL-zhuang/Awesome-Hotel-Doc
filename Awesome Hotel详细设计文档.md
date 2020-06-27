@@ -399,6 +399,10 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
   - 语法 : `Integer getRoomCurNumByOrder(Integer hotelId, String beginTime, String endTime, String type)`
   - 前置条件 : 获得Hotel, Order数据库服务的引用
   - 后置条件 : 通过订单查找酒店特定房间的可用房间数，用于addOrder时的检验
+- OrderService.argueAbnormalOrder
+  - 语法 : `ResponseVO argueAbnormalOrder(Integer orderId, String reason)`
+  - 前置条件 : 获得Order数据库服务的引用，已被标记为异常订单
+  - 后置条件 : 将订单的申诉内容记录在comment里
 
 需要的服务（需接口）
 
