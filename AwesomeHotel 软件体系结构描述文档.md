@@ -8,16 +8,9 @@
 |            程荣鑫            | 2020.4.19 | 添加目录，完成组合视图                                       | 草稿v1.0 |
 |            郭礼华            | 2020.4.23 | 添加了架构设计中的模块职责和用户界面层分解                   | 草稿v1.0 |
 |            庄子元            | 2020.4.24 | 添加了架构涉及中业务逻辑层的模块职责和用户界面分解，完成逻辑视图 | 草稿v1.0 |
-<<<<<<< HEAD
-|             韩禧             | 2020.4.25 | 完善了数据层                                                     | 草稿v1.0 |
-|            郭礼华            | 2020.5.xx | 更新了架构设计中的模块职责                                       |          |
-|            郭礼华            | 2020.5.xx | 更新了用户界面层分解                                             |          |
-=======
 |             韩禧             | 2020.4.25 | 完善了数据层                                                 | 草稿v1.0 |
-|            郭礼华            | 2020.5.xx | 更新了架构设计中的模块职责                                   |          |
-|            郭礼华            | 2020.5.xx | 更新了用户界面层分解                                         |          |
->>>>>>> 24052cd7fa73426a98d11d99dc8561e1a627c8a2
-
+|            郭礼华            | 2020.5.1  | 更新了结构设计中的模块职责                                   |          |
+|            郭礼华            | 2020.5.1  | 更新了用户界面层分解                                         |          |
 ## 目录
 
 [TOC]
@@ -201,37 +194,17 @@
 
 需要的服务（需接口）
 
-| 服务名                                                             | 服务                   |
-| ------------------------------------------------------------------ | ---------------------- |
+| 服务名                                                       | 服务                   |
+| ------------------------------------------------------------ | ---------------------- |
 | HotelService.updateHotelInfo(Integer hotelId, HotelForm hotelForm) | 修改酒店的基本信息     |
-<<<<<<< HEAD
-| RoomService.addRoomInfo(RoomVO hotelRoom)                          | 添加酒店客房           |
-| RoomService.deleteRoom(Integer hotelId, String roomType)           | 删除酒店某种类型的房间 |
-=======
 | RoomService.insertRoomInfo(RoomVO hotelRoom)                 | 添加酒店客房           |
 | RoomService.deleteRoom(Integer hotelId, String roomType)     | 删除酒店某种类型的房间 |
->>>>>>> f9c56b5f4d23697c2e7f982834d6fa2777520742
+
 
 ##### 4.2.2.3 salesPersonView模块的接口规范
 
 需要的服务（需接口）
 
-<<<<<<< HEAD
-| 服务名                                                                                                   | 服务                                             |
-| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| CouponService.getWebsiteCoupon()                                                                         | 获取所有网站优惠券                               |
-| CouponService.addTimeCouponVO(TimeCouponVO couponVO)                                                     | 网站营销人员制定节日优惠优惠券                   |
-| CouponService.addBizRegionCouponVO(BizRegionCouponVO couponVO)                                           | 网站营销人员制定商圈优惠优惠券                   |
-| CouponService.addCorporateCouponVO(CorporateCouponVO couponVO)                                           | 网站营销人员制定企业优惠优惠券                   |
-| AccountService.getUserInfoByEmail(String email)                                                          | 网站营销人员根用户邮箱获取用户的个人信息         |
-| AccountService.chargeCredit(Integer id, Integer change, String reason)                                   | 网站营销人员为用户充值信誉积分                   |
-| VIPService.freezeClientVIP(Integer userId)                                                               | 根据userId冻结用户网站会员                       |
-| VIPService.restoreClientVIP(Integer userId)                                                              | 根据userId恢复网站会员                           |
-| VIPService.freezeCorpVIP(String corporationName)                                                         | 根据企业名字冻结企业会员                         |
-| VIPService.restoreCorpVIP(String corporationName)                                                        | 根据企业名字恢复企业会员                         |
-| VIPService.getAllVIPClient()                                                                             | 获取所有网站会员                                 |
-| VIPService.getAllVIPCorp()                                                                               | 获取所有企业会员                                 |
-=======
 | 服务名                                                       | 服务                                             |
 | ------------------------------------------------------------ | ------------------------------------------------ |
 | AccountService.getUserInfoByEmail(String email)              | 网站营销人员根用户邮箱获取用户的个人信息         |
@@ -242,7 +215,6 @@
 | VIPService.restoreCorpVIP(String corporationName)            | 根据企业名字恢复企业会员                         |
 | VIPService.getAllVIPClient()                                 | 获取所有网站会员                                 |
 | VIPService.getAllVIPCorp()                                   | 获取所有企业会员                                 |
->>>>>>> f9c56b5f4d23697c2e7f982834d6fa2777520742
 | LevelService.formulateVIPLevel(Integer level, String type, Integer requestConsumption, double reduction) | 制定某个会员等级所需要的消费额以及享受的折扣额度 |
 | LevelService.getTheRequestOfLevel(Integer level, String type)                                            | 获取达到某个等级会员所需要的消费额               |
 
@@ -256,12 +228,6 @@
 | AccountService.login(UserForm userForm)                                                   | 用户登陆，登录成功会将用户信息保存在session中   |
 | AccountService.getUserInfo(int id)                                                        | 获取用户个人信息                                |
 | AccountService.updateUserInfo(int id, String password,String username,String phonenumber) | 更新用户的个人信息，包括密码， 账户名和手机号码 |
-<<<<<<< HEAD
-| AccountService.updatePassword(int  id, String password)                                   | 更新用户的账号密码                              |
-| AccountService.updateBirthday(int id, String birthday)                                    | 更新用户的生日                                  |
-| VIPService.registerAsClientVIP(Integer userId, String Birthday);                          | 注册网站会员                                    |
-| VIPService.registerAsCorpVIP(String corporationName);                                     | 注册企业会员                                    |
-=======
 | AccountService.updateCorporation(int id, String corporation) | 更改用户所属企业                                |
 | AccountService.updatePassword(int  id, String password)      | 更新用户的账号密码                              |
 | AccountService.updateBirthday(int id, String birthday)       | 更新用户的生日                                  |
@@ -271,31 +237,10 @@
 | VIPService.getVIPbyUserId(Integer userId)                    | 根据userId获取网站会员相关信息                  |
 | VIPService.getVIPbyCorpName(String corporationName)          | 根据企业名获取企业会员相关信息                  |
 | CollectionService.getUserCollection(Integer userId)          | 获取用户收藏的所有酒店列表                      |
->>>>>>> f9c56b5f4d23697c2e7f982834d6fa2777520742
-
 ##### 4.2.2.5 hotelView 模块的接口规范
 
 需要的服务（需接口）
 
-<<<<<<< HEAD
-| 服务名                                                          | 服务                           |
-| --------------------------------------------------------------- | ------------------------------ |
-| hotelService.retrieveHotels()                                   | 获取所有酒店信息               |
-| hotelService.retrieveHotelDetails(Integer hotelId)              | 获取某家酒店详细信息           |
-| hotelService.getRoomCurNum(Integer hotelId,String roomType)     | 查看酒店某种房间剩余数量       |
-| hotelService.addComment(CommentVO commentVO, Integer hotelId)   | 为某家酒店添加评论             |
-| hotelService.annulComment(CommentVO commentVO, Integer hotelId) | 撤销为某家酒店的评论           |
-| hotelSearchService.searchHotel(SearchBodyVO searchBody)         | 根据searchBody中的条件搜索酒店 |
-| CollectionService.addCollection(CollectionVO collectionVO)      | 添加收藏的酒店                 |
-| CollectionService.annulCollection(Integer collectionId)         | 取消收藏的酒店                 |
-| CollectionService.getHotelCollection(Integer hotelId)           | 获取酒店被收藏的数量           |
-| QuestionService.addQuestion(QuestionForm questionForm)          | 对酒店提问                     |
-| QuestionService.annulQuestion(Integer questionId)               | 撤销某个对酒店的评论           |
-| QuestionService.getHotelQuestion(Integer hotelId)               | 获取酒店所有提问               |
-| AnswerService.addAnswer(AnswerVO answerVO)                      | 对酒店的问题进行回复           |
-| AnswerService.getQuestionAnswers(Integer questionId)            | 获取某个问题的所有回复         |
-| AnswerService.annulAnswer(Integer answerId)                     | 撤销某条回复                   |
-=======
 | 服务名                                                       | 服务                                     |
 | ------------------------------------------------------------ | ---------------------------------------- |
 | HotelService.retrieveHotels()                                | 获取所有酒店信息                         |
@@ -315,23 +260,14 @@
 | AnswerService.addAnswer(AnswerVO answerVO)                   | 对酒店的问题进行回复                     |
 | AnswerService.getQuestionAnswers(Integer questionId)         | 获取某个问题的所有回复                   |
 | AnswerService.annulAnswer(Integer answerId)                  | 撤销某条回复                             |
->>>>>>> f9c56b5f4d23697c2e7f982834d6fa2777520742
-
 ##### 4.2.2.6 couponView 模块的接口规范
 
 需要的服务（需接口）
 
-<<<<<<< HEAD
-| 服务名                                                                     | 服务                                         |
-| -------------------------------------------------------------------------- | -------------------------------------------- |
-| CouponService.getMatchOrderCoupon(OrderVO orderVO)                         | 返回某一订单可用的优惠策略列表               |
-| CouponService.getHotelAllCoupon(Integer hotelId)                           | 查看某个酒店提供的所有优惠策略（包括失效的） |
-=======
 | 服务名                                                       | 服务                                         |
 | ------------------------------------------------------------ | -------------------------------------------- |
 | CouponService.getHotelAllCoupon(Integer hotelId)             | 查看某个酒店提供的所有优惠策略（包括失效的） |
 | CouponService.getWebsiteCoupon()                             | 获取所有网站优惠券                           |
->>>>>>> f9c56b5f4d23697c2e7f982834d6fa2777520742
 | CouponService.addHotelTargetMoneyCoupon(HotelTargetMoneyCouponVO couponVO) | 添加酒店满减优惠策略                         |
 | CouponService.addManyRoomCoupon(ManyRoomCouponVO couponVO)                 | 添加酒店多间优惠策略                         |
 | CouponService.addTimeCouponVO(TimeCouponVO couponVO)                       | 添加酒店限时优惠策略                         |
@@ -695,7 +631,7 @@
 |     `HotelService.annulComment`     |              修改Hotel的评分               |
 |      `HotelService.addComment`      |              修改Hotel的评分               |
 
-##### UserBl模块的接口规范
+##### 4.3.2.5 UserBl模块的接口规范
 
 提供的服务（供接口）
 
