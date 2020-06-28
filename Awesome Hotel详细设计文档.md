@@ -55,7 +55,7 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 - 设计图
 
-![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/adminbl.png)
+![adminBL](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/adminbl.png)
 
 - 类的职责
 
@@ -100,7 +100,7 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
     - addManager顺序图
 
-    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/addManager.png)
+    ![addManager](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/addManager.png)
 
     - getAllManager顺序图
 
@@ -108,11 +108,11 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
     - deleteHotelManager顺序图
 
-    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/deleteHotelManger.png)
+    ![deleteManager](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/deleteHotelManger.png)
 
     - Admin状态图
 
-    ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/admin.png)
+    ![admin](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/admin.png)
 
 - 业务逻辑层的设计原理
 
@@ -122,17 +122,17 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 ##### 4.1.2.1 概述
 
-adminbl模块承担的需求参见需求规格说明文档功能需求和相关非功能需求。
-adminbl模块的接口参见软件体系结构描述文档中的接口表。
+Couponbl模块承担的需求参见需求规格说明文档功能需求和相关非功能需求。
+Couponbl模块的接口参见软件体系结构描述文档中的接口表。
 
 ##### 4.1.2.2 整体结构
 
-adminbl主要功能是管理酒店工作人员和网站营销人员账户。
-UserForm是前端传回的用户信息对象，由AdminController调用业务逻辑层方法，将UserForm转化为User，User对象被设计为持久化对象，存储在数据库中。
+Couponbl主要功能是网站工作人员、酒店工作人员设立VIP优惠、促销优惠券业务。
+CouponVO是前端传回的用户信息对象，分为BirthdayCouponVO, TimeVO, BizRegionVO, CorporateCouponVO, HotelTargetMoneyCouponVO, ManyRoomCouponVO，由CouponController调用业务逻辑层方法，将CouponVO转化为Coupon，Coupon对象被设计为持久化对象，存储在数据库中。
 
 - 设计图
 
-![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/couponbl.png)
+![CouponBL](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/couponbl.png)
 
 - 类的职责
 
@@ -230,13 +230,15 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 ##### 4.1.3.1 概述
 
-adminbl模块承担的需求参见需求规格说明文档功能需求和相关非功能需求。
-adminbl模块的接口参见软件体系结构描述文档中的接口表。
+Hotelbl模块承担的需求参见需求规格说明文档功能需求和相关非功能需求。
+
+Hotelbl模块的接口参见软件体系结构描述文档中的接口表。
 
 ##### 4.1.3.2 整体结构
 
-adminbl主要功能是管理酒店工作人员和网站营销人员账户。
-UserForm是前端传回的用户信息对象，由AdminController调用业务逻辑层方法，将UserForm转化为User，User对象被设计为持久化对象，存储在数据库中。
+Hotelbl主要功能是酒店和酒店房间的管理业务。
+
+HotelForm是前端传回的酒店信息对象，HotelVO和RoomVO是传递酒店信息对象，由HotelController调用业务逻辑层方法，将HotelVO, RoomVO转化为Hotel和Room，他们被设计为持久化对象，存储在数据库中。
 
 - 设计图
 
@@ -361,13 +363,15 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 ##### 4.1.4.1 概述
 
-adminbl模块承担的需求参见需求规格说明文档功能需求和相关非功能需求。
-adminbl模块的接口参见软件体系结构描述文档中的接口表。
+Orderbl模块承担的需求参见需求规格说明文档功能需求和相关非功能需求。
+
+Orderbl模块的接口参见软件体系结构描述文档中的接口表。
 
 ##### 4.1.4.2 整体结构
 
-adminbl主要功能是管理酒店工作人员和网站营销人员账户。
-UserForm是前端传回的用户信息对象，由AdminController调用业务逻辑层方法，将UserForm转化为User，User对象被设计为持久化对象，存储在数据库中。
+Orderbl主要功能是管理酒店订单和用户评价业务
+
+OrderVO是前端传回的用户信息对象，由OrderController调用业务逻辑层方法，将OrderVO转化为Order，Order对象被设计为持久化对象，存储在数据库中。
 
 - 设计图
 
@@ -493,7 +497,7 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
     同样，这里并不包含上述全部接口，挑了几个主要的。
 
     - addOrder顺序图
-    
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/reverseHotel.png)
 
     - annulOrder顺序图
@@ -528,13 +532,14 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 ##### 4.1.5.1 概述
 
-adminbl模块承担的需求参见需求规格说明文档功能需求和相关非功能需求。
-adminbl模块的接口参见软件体系结构描述文档中的接口表。
+Questionbl模块承担的需求参见需求规格说明文档功能需求和相关非功能需求。
+
+Questionbl模块的接口参见软件体系结构描述文档中的接口表。
 
 ##### 4.1.5.2 整体结构
 
-adminbl主要功能是管理酒店工作人员和网站营销人员账户。
-UserForm是前端传回的用户信息对象，由AdminController调用业务逻辑层方法，将UserForm转化为User，User对象被设计为持久化对象，存储在数据库中。
+Questionbl主要功能是管理用户提问
+QuestionVO， AnswerVO是前端传回的用户信息对象，由HotelController调用业务逻辑层方法，将QuestionVO, AnswerVO转化为Question, Answer对象被设计为持久化对象，存储在数据库中。
 
 - 设计图
 
@@ -628,13 +633,14 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 ##### 4.1.6.1 概述
 
-adminbl模块承担的需求参见需求规格说明文档功能需求和相关非功能需求。
-adminbl模块的接口参见软件体系结构描述文档中的接口表。
+Userbl模块承担的需求参见需求规格说明文档功能需求和相关非功能需求。
+Userbl模块的接口参见软件体系结构描述文档中的接口表。
 
 ##### 4.1.6.2 整体结构
 
-adminbl主要功能是管理酒店工作人员和网站营销人员账户。
-UserForm是前端传回的用户信息对象，由AdminController调用业务逻辑层方法，将UserForm转化为User，User对象被设计为持久化对象，存储在数据库中。
+Userbl主要功能是管理用户、收藏和信誉记录。
+
+UserForm是前端传回的用户信息对象，由UserController调用业务逻辑层方法，将UserForm转化为User，User对象被设计为持久化对象，存储在数据库中。
 
 - 设计图
 
@@ -800,13 +806,15 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
 
 ##### 4.1.7.1 概述
 
-adminbl模块承担的需求参见需求规格说明文档功能需求和相关非功能需求。
-adminbl模块的接口参见软件体系结构描述文档中的接口表。
+VIPbl模块承担的需求参见需求规格说明文档功能需求和相关非功能需求。
+
+VIPbl模块的接口参见软件体系结构描述文档中的接口表。
 
 ##### 4.1.7.2 整体结构
 
-adminbl主要功能是管理酒店工作人员和网站营销人员账户。
-UserForm是前端传回的用户信息对象，由AdminController调用业务逻辑层方法，将UserForm转化为User，User对象被设计为持久化对象，存储在数据库中。
+VIPbl主要功能是管理酒店工作人员和网站营销人员账户。
+
+前端传回的用户注册VIP信息，由UserController调用业务逻辑层方法，将VIP注册信息转化为ClientVIP或CorpVIP，VIP对象被设计为持久化对象，存储在数据库中。
 
 - 设计图
 
@@ -925,7 +933,7 @@ UserForm是前端传回的用户信息对象，由AdminController调用业务逻
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/getTheRequestOfLevel.png)
 
     - VIP状态图
-    
+
     ![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/VIP.png)
 
 - 业务逻辑层的设计原理
