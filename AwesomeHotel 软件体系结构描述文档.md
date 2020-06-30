@@ -96,7 +96,7 @@
 
 由于Web应用的特殊性，奥森酒店预定系统 ***Awesome Hotel*** 的客户端不需要进行开发，只需用户自行安装浏览器即可，故略过。服务器端开发包图如下所示。
 
-![serverpkg](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/severpkg.png)
+![](https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/img/服务端开发包图.png)
 
 ### 3.2 运行时进程
 
